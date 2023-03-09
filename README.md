@@ -1,5 +1,8 @@
 # Bento Charts
-[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/bento)](https://artifacthub.io/packages/search?repo=bento)
+
+[![Build Status](https://travis-ci.org/bento-platform/Bento-Charts.svg?branch=master)](https://travis-ci.org/bento-platform/Bento-Charts)
+[![Coverage Status](https://coveralls.io/repos/github/bento-platform/Bento-Charts/badge.svg?branch=master)](https://coveralls.io/github/bento-platform/Bento-Charts?branch=master)
+[![npm version](https://badge.fury.io/js/bento-charts.svg)](https://badge.fury.io/js/bento-charts)
 
 Bento charts offers Bar and Pie charts for Bento project UI.
 
