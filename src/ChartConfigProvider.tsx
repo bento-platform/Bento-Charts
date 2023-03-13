@@ -1,16 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 
-import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
-import { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
+import {
+  DEFAULT_CHART_THEME,
+  defaultTranslationObject,
+} from "./constants/chartConstants";
+import {
+  ChartTheme,
+  LngDictionary,
+  SupportedLng,
+  TranslationObject,
+} from "./types/chartTypes";
 
 const ChartThemeContext = React.createContext<ChartTheme>(DEFAULT_CHART_THEME);
-export const useChartTheme = () => useContext(ChartThemeContext);
+export function useChartTheme() {
+  return useContext(ChartThemeContext);
+}
 
-const ChartTranslationContext = React.createContext<LngDictionary>(defaultTranslationObject.en);
-export const useChartTranslation = () => useContext(ChartTranslationContext);
+const ChartTranslationContext = React.createContext<LngDictionary>(
+  defaultTranslationObject.en
+);
+export function useChartTranslation() {
+  return useContext(ChartTranslationContext);
+}
 
 const ChartConfigProvider = ({
-  theme = useChartTheme(),
+  theme = DEFAULT_CHART_THEME,
   Lng,
   translationMap,
   children,
@@ -20,15 +34,19 @@ const ChartConfigProvider = ({
   translationMap?: TranslationObject;
   children: React.ReactElement;
 }) => {
-  let lang: SupportedLng = 'en';
+  let lang: SupportedLng = "en";
   try {
     lang = Lng as SupportedLng;
   } catch (e) {
-    console.error('Lng is not a supported language');
+    console.error("Lng is not a supported language");
   }
   return (
     <ChartThemeContext.Provider value={theme}>
-      <ChartTranslationContext.Provider value={translationMap ? translationMap[lang] : defaultTranslationObject[lang]}>
+      <ChartTranslationContext.Provider
+        value={
+          translationMap ? translationMap[lang] : defaultTranslationObject[lang]
+        }
+      >
         {children}
       </ChartTranslationContext.Provider>
     </ChartThemeContext.Provider>
