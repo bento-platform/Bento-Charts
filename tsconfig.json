@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "dist",
     "sourceMap": true,
     "strictNullChecks": true,
     "module": "es6",
@@ -9,16 +9,18 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "declaration": true,
   },
   "include": [
-    "./src/"
-  ]
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
 }
