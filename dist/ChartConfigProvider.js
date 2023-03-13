@@ -21,7 +21,7 @@ export function useChartTranslation() {
     return useContext(ChartTranslationContext);
 }
 var ChartConfigProvider = function (_a) {
-    var _b = _a.theme, theme = _b === void 0 ? useChartTheme() : _b, Lng = _a.Lng, translationMap = _a.translationMap, children = _a.children;
+    var _b = _a.theme, theme = _b === void 0 ? DEFAULT_CHART_THEME : _b, Lng = _a.Lng, translationMap = _a.translationMap, children = _a.children;
     var lang = "en";
     try {
         lang = Lng;
