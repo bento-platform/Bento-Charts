@@ -1,0 +1,37 @@
+{
+  "name": "bento-charts",
+  "version": "1.0.8",
+  "description": "Charts library for Bento-platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bento-platform/Bento-Charts.git"
+  },
+  "keywords": [
+    "Bento",
+    "Charts"
+  ],
+  "author": "Sanjeev Lakhwani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bento-platform/Bento-Charts/issues"
+  },
+  "homepage": "https://github.com/bento-platform/Bento-Charts#readme",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "recharts": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
+    "prettier": "2.7.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5"
+  }
+}
