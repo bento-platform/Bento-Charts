@@ -1,11 +1,9 @@
-export interface ChartDataType extends Array<ChartDataItem> {
-}
+export type ChartDataType = Array<ChartDataItem>;
 export interface ChartDataItem {
     x: string;
     y: number;
 }
-export interface TooltipPayload extends Array<TooltipPayloadItem> {
-}
+export type TooltipPayload = Array<TooltipPayloadItem>;
 interface TooltipPayloadItem {
     name: string;
     payload: {

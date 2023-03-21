@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Curve, Tooltip, Sector } from 'recharts';
-import { Props } from 'recharts/types/polar/Pie';
-type PieProps = Props;
+import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps } from 'recharts';
 import type CSS from 'csstype';
 
 import {
