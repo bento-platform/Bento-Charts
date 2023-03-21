@@ -1,11 +1,11 @@
-export type ChartDataType = Array<ChartDataItem>
+export type ChartDataType = ChartDataItem[]
 
 export interface ChartDataItem {
   x: string;
   y: number;
 }
 
-export type TooltipPayload = Array<TooltipPayloadItem>
+export type TooltipPayload = TooltipPayloadItem[]
 
 interface TooltipPayloadItem {
   name: string;
