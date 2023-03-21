@@ -9,6 +9,17 @@
     "prepublishOnly": "npm run build",
     "lint": "npx eslint src/**"
   },
+  "release": {
+    "branches": ["main"],
+    "dryRun": true,
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      "@semantic-release/github",
+      "@semantic-release/git"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bento-platform/Bento-Charts.git"
