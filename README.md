@@ -49,8 +49,9 @@ Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec
 
 ## Release procedure
 
-A commit on master will trigger a build and release of the package to the npm Registry, no need to manually create tags thanks to semantic-release.
+A commit on the `main` branch will trigger a build and release of the package to the npm Registry, no need to manually create tags thanks to semantic-release.
 
+Please follow the instructions bellow when writing your commits.
 
 ### Semantic release
 Bento-Charts adheres to the [semver](https://semver.org/) versioning convention (Semantic Versioning). This repository uses the 
