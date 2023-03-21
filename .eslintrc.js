@@ -20,5 +20,11 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+        "semi": [2, "always"]
+    },
+    "settings": {
+        "react": {
+            "version": "^18.2.0"
+        }
     }
 }

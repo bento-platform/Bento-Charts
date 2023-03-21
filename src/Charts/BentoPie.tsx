@@ -123,12 +123,12 @@ const getPropNumber = (val: number | string | undefined, defaultValue?: number):
     value = Number(val);
   }
   return value;
-}
+};
 
 const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
   const { fill, payload, index, activeIndex } = params;
-  const percent = params.percent || 0
-  const midAngle = params.midAngle || 0
+  const percent = params.percent || 0;
+  const midAngle = params.midAngle || 0;
 
   // skip rendering this static label if the sector is selected.
   // this will let the 'renderActiveState' draw without overlapping.
