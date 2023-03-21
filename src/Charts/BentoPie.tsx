@@ -118,11 +118,10 @@ const BentoPie = ({
 };
 
 const toNumber = (val: number | string | undefined, defaultValue?: number): number => {
-  let value = defaultValue || 0;
   if (val && typeof val === "string") {
-    value = Number(val);
+    return Number(val);
   }
-  return value;
+  return defaultValue || 0;
 };
 
 const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
