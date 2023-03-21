@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps } from 'recharts';
+import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps, PieLabelRenderProps } from 'recharts';
 import type CSS from 'csstype';
 
 import {
@@ -117,15 +117,29 @@ const BentoPie = ({
   );
 };
 
-const RenderLabel: PieProps['label'] = (params) => {
-  const { cx, cy, midAngle, outerRadius, fill, payload, index, activeIndex } = params;
+const getPropNumber = (val: number | string | undefined, defaultValue?: number): number => {
+  let value = defaultValue || 0
+  if (val && typeof val === "string") {
+    value = Number(val)
+  }
+  return value
+}
+
+const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
+  const {fill, payload, index, activeIndex } = params;
+  const percent = params.percent || 0
+  const midAngle = params.midAngle || 0
 
   // skip rendering this static label if the sector is selected.
   // this will let the 'renderActiveState' draw without overlapping.
   // also, skip rendering if segment is too small a percentage (avoids label clutter)
-  if (index === activeIndex || params.percent < LABEL_THRESHOLD) {
+  if (index === activeIndex || percent < LABEL_THRESHOLD) {
     return;
   }
+
+  const outerRadius = getPropNumber(params.outerRadius)
+  const cx = getPropNumber(params.cx)
+  const cy = getPropNumber(params.cy)
 
   const name = payload.name === 'null' ? '(Empty)' : payload.name;
 
@@ -146,8 +160,8 @@ const RenderLabel: PieProps['label'] = (params) => {
   };
 
   const offsetRadius = 20;
-  const startPoint = polarToCartesian(params.cx, params.cy, params.outerRadius, midAngle);
-  const endPoint = polarToCartesian(params.cx, params.cy, params.outerRadius + offsetRadius, midAngle);
+  const startPoint = polarToCartesian(cx, cy, outerRadius, midAngle);
+  const endPoint = polarToCartesian(cx, cy, outerRadius + offsetRadius, midAngle);
   const lineProps = {
     ...params,
     fill: 'none',
