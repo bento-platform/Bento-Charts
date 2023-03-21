@@ -80,17 +80,17 @@ Both `<type>` and `<short summary>` are mandatory, while `<scope>` is optional, 
 
 After fixing a dependency issue:
 ```
-fix(dependencies): Resolve peer dependencies issues caused by React version
+fix(dependencies): resolve peer dependencies issues caused by React version
 ```
 
 After adding a new Rechart feature:
 ```
-feat(charts): Add support for MixBarChart
+feat(charts): add support for mixmarchart
 ```
 
 After adding unit tests to the charts
 ```
-test(charts): Add unit tests for MixBarChart
+test(charts): add unit tests for mixbarchart
 ```
 
 ## Commit with commitlint
