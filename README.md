@@ -9,6 +9,7 @@ This repository hosts the code for Bento-Charts, a library in React, TypeScript 
 Bento charts offers Bar and Pie charts for Bento project UI web applications in React.
 
 ## Installation
+Add Bento-Charts as a dependency to another project:
 
 ```bash
 npm install bento-charts
@@ -51,7 +52,7 @@ Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec
 
 A commit on the `main` branch will trigger a build and release of the package to the npm Registry, no need to manually create tags thanks to semantic-release.
 
-Please follow the instructions bellow when writing your commits.
+**Please follow the instructions bellow when writing your commits.**
 
 ### Semantic release
 Bento-Charts adheres to the [semver](https://semver.org/) versioning convention (Semantic Versioning). This repository uses the 
@@ -90,4 +91,26 @@ feat(charts): Add support for MixBarChart
 After adding unit tests to the charts
 ```
 test(charts): Add unit tests for MixBarChart
+```
+
+## Commit with commitlint
+[Commitlint](https://commitlint.js.org/#/) is a safeguard for commit message formats, which you can use to help write semver compliant commits. [Husky](https://github.com/typicode/husky) is a git hooks tool that binds commitlint to the `git commit` command.
+
+### Installation
+Run these steps once to setup commitlint + husky.
+```shell
+# Install dev dependencies (commitlint & husky)
+npm install
+# Install husky git hook
+npx husky install
+# Add commitlint as a hook to husky
+npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
+```
+
+### Usage
+Use the git cli as you normally would to make your commits, commitlint will intercept your commit if it is malformed.
+
+Example:
+```bash
+git commit -m "ci(semantic-release): add commitlint and husky as dev tools to write valid commits"
 ```
