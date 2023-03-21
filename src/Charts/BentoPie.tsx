@@ -118,15 +118,15 @@ const BentoPie = ({
 };
 
 const getPropNumber = (val: number | string | undefined, defaultValue?: number): number => {
-  let value = defaultValue || 0
+  let value = defaultValue || 0;
   if (val && typeof val === "string") {
-    value = Number(val)
+    value = Number(val);
   }
-  return value
+  return value;
 }
 
 const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
-  const {fill, payload, index, activeIndex } = params;
+  const { fill, payload, index, activeIndex } = params;
   const percent = params.percent || 0
   const midAngle = params.midAngle || 0
 
@@ -137,9 +137,9 @@ const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
     return;
   }
 
-  const outerRadius = getPropNumber(params.outerRadius)
-  const cx = getPropNumber(params.cx)
-  const cy = getPropNumber(params.cy)
+  const outerRadius = getPropNumber(params.outerRadius);
+  const cx = getPropNumber(params.cx);
+  const cy = getPropNumber(params.cy);
 
   const name = payload.name === 'null' ? '(Empty)' : payload.name;
 
