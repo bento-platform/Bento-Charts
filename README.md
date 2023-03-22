@@ -94,7 +94,8 @@ test(charts): add unit tests for mixbarchart
 ```
 
 ## Commit with commitlint
-[Commitlint](https://commitlint.js.org/#/) is a safeguard for commit message formats, which you can use to help write semver compliant commits. [Husky](https://github.com/typicode/husky) is a git hooks tool that binds commitlint to the `git commit` command.
+[Commitlint](https://commitlint.js.org/#/) is a safeguard for commit message formats, which you can use to help write semver 
+compliant commits. [Husky](https://github.com/typicode/husky) is a git hooks tool that binds commitlint to the `git commit` command.
 
 ### Installation
 Run these steps once to setup commitlint + husky.
