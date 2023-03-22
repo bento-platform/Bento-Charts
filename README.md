@@ -62,7 +62,7 @@ the npm Registry.
 Semantic-release parses the commit messages in the release branch in order to determine the versioning changes. It does not rely on magic to work, but rather on specific commit message formats, which are described bellow.
 
 ### Commit message guidelines
-Semantic-release uses the commit message [conventions](https://github.com/angular/angular/blob/main/CONTRIBUTING.md#-commit-message-format) of Angular to parse relevant information.
+Semantic-release uses the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification in order to parse relevant information.
 
 ```
 <type>(<scope>): <short summary>
