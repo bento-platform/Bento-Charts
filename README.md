@@ -115,3 +115,25 @@ Example:
 ```bash
 git commit -m "ci(semantic-release): add commitlint and husky as dev tools to write valid commits"
 ```
+
+## Local development
+For local development in a React/Recharts app that uses bento-charts, you can follow these steps for your setup:
+
+1. `build` and `pack` bento-charts
+```bash
+# Builds package and creates a pack file in the "./packs" dir
+npm run buildpack
+```
+
+2. In the project using bento-charts, modify the bento-charts dependency in package.json so that the version number is now the absolute path to the pack file.
+```diff
+- "bento-charts": "2.0.0",
++ "bento-charts": "file:~/bento-charts/packs/bento-charts-2.0.0.tgz",
+```
+
+3. Install the dependencies in the project
+```bash
+npm install
+```
+
+**Note: you will need to repeat steps 1 and 3 everytime you want the changes to be applied to the app using bento-charts**

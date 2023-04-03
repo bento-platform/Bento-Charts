@@ -120,6 +120,8 @@ const BentoPie = ({
 const toNumber = (val: number | string | undefined, defaultValue?: number): number => {
   if (val && typeof val === "string") {
     return Number(val);
+  } else if (val && typeof val === "number") {
+    return val;
   }
   return defaultValue || 0;
 };
