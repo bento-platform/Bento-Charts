@@ -1,5 +1,5 @@
 import React from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label, BarProps } from 'recharts';
 import {
   TOOL_TIP_STYLE,
   COUNT_STYLE,
@@ -31,6 +31,7 @@ const BentoBarChart = ({
   preFilter,
   dataMap,
   postFilter,
+  onClick,
   removeEmpty = true,
   colorTheme = 'default',
 }: BarChartProps) => {
@@ -47,6 +48,11 @@ const BentoBarChart = ({
   if (removeEmpty) data = data.filter((d) => d.y !== 0);
 
   const totalCount = data.reduce((sum, e) => sum + e.y, 0);
+
+  const onHover: BarProps['onMouseEnter'] = (_data, _index, e) => {
+    const { target } = e;
+    if (onClick && target) (target as SVGElement).style.cursor = 'pointer';
+  };
 
   // Regarding XAxis.ticks below:
   //  The weird conditional is added from https://github.com/recharts/recharts/issues/2593#issuecomment-1311678397
@@ -73,7 +79,7 @@ const BentoBarChart = ({
           <Label value={t['Count']} offset={-10} position="left" angle={270} />
         </YAxis>
         <Tooltip content={<BarTooltip totalCount={totalCount} />} />
-        <Bar dataKey="y" isAnimationActive={false}>
+        <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover}>
           {data.map((entry) => (
             <Cell key={entry.x} fill={fill(entry)} />
           ))}

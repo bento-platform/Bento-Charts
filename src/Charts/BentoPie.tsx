@@ -6,7 +6,6 @@ import {
   TOOL_TIP_STYLE,
   LABEL_STYLE,
   COUNT_STYLE,
-  OTHER_THRESHOLD,
   CHART_MISSING_FILL,
   CHART_WRAPPER_STYLE,
   RADIAN,
@@ -17,7 +16,7 @@ import {
   TEXT_STYLE,
 } from '../constants/chartConstants';
 import type { PieChartProps, TooltipPayload } from '../types/chartTypes';
-import { useChartTheme, useChartTranslation } from '../ChartConfigProvider';
+import { useChartTheme, useChartTranslation, useChartThreshold } from '../ChartConfigProvider';
 import { polarToCartesian } from '../util/chartUtils';
 
 const labelShortName = (name: string) => {
@@ -34,9 +33,11 @@ const BentoPie = ({
   preFilter,
   dataMap,
   postFilter,
+  onClick,
   sort = true,
   removeEmpty = true,
   colorTheme = 'default',
+  chartThreshold = useChartThreshold(),
 }: PieChartProps) => {
   const t = useChartTranslation();
   const theme = useChartTheme().pie[colorTheme];
@@ -58,12 +59,16 @@ const BentoPie = ({
   // combining sections with less than OTHER_THRESHOLD
   const sum = data.reduce((acc, e) => acc + e.y, 0);
   const length = data.length;
-  const threshold = OTHER_THRESHOLD * sum;
+  const threshold = chartThreshold * sum;
   const temp = data.filter((e) => e.y > threshold);
+
   // length - 1 intentional: if there is just one category bellow threshold the "Other" category is not necessary
   data = temp.length === length - 1 ? data : temp;
   if (data.length !== length) {
-    data.push({ x: t['Other'], y: sum - data.reduce((acc, e) => acc + e.y, 0) });
+    data.push({
+      x: t['Other'],
+      y: sum - data.reduce((acc, e) => acc + e.y, 0),
+    });
   }
 
   const bentoFormatData = data.map((e) => ({ name: e.x, value: e.y }));
@@ -73,9 +78,9 @@ const BentoPie = ({
     setActiveIndex(index);
   };
 
-  const onHover: PieProps['onMouseOver'] = (_data, _index, e) => {
+  const onHover: PieProps['onMouseOver'] = (data, _index, e) => {
     const { target } = e;
-    if (target) (target as SVGElement).style.cursor = 'pointer';
+    if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
   };
 
   const onLeave: PieProps['onMouseLeave'] = () => {
@@ -83,44 +88,47 @@ const BentoPie = ({
   };
 
   return (
-    <div style={CHART_WRAPPER_STYLE}>
-      <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
-        <Pie
-          data={bentoFormatData}
-          dataKey="value"
-          cx="50%"
-          cy="50%"
-          innerRadius={35}
-          outerRadius={80}
-          label={RenderLabel}
-          labelLine={false}
-          isAnimationActive={false}
-          onMouseEnter={onEnter}
-          onMouseLeave={onLeave}
-          onMouseOver={onHover}
-          activeIndex={activeIndex}
-          activeShape={RenderActiveLabel}
-        >
-          {data.map((entry, index) => {
-            let fill = theme[index % theme.length];
-            fill = entry.x.toLowerCase() === 'missing' ? CHART_MISSING_FILL : fill;
-            return <Cell key={index} fill={fill} />;
-          })}
-        </Pie>
-        <Tooltip
-          content={<CustomTooltip totalCount={sum} />}
-          isAnimationActive={false}
-          allowEscapeViewBox={{ x: true, y: true }}
-        />
-      </PieChart>
-    </div>
+    <>
+      <div style={CHART_WRAPPER_STYLE}>
+        <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
+          <Pie
+            data={bentoFormatData}
+            dataKey="value"
+            cx="50%"
+            cy="50%"
+            innerRadius={35}
+            outerRadius={80}
+            label={RenderLabel}
+            labelLine={false}
+            isAnimationActive={false}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+            onMouseOver={onHover}
+            activeIndex={activeIndex}
+            activeShape={RenderActiveLabel}
+            onClick={onClick}
+          >
+            {data.map((entry, index) => {
+              let fill = theme[index % theme.length];
+              fill = entry.x.toLowerCase() === 'missing' ? CHART_MISSING_FILL : fill;
+              return <Cell key={index} fill={fill} />;
+            })}
+          </Pie>
+          <Tooltip
+            content={<CustomTooltip totalCount={sum} />}
+            isAnimationActive={false}
+            allowEscapeViewBox={{ x: true, y: true }}
+          />
+        </PieChart>
+      </div>
+    </>
   );
 };
 
 const toNumber = (val: number | string | undefined, defaultValue?: number): number => {
-  if (val && typeof val === "string") {
+  if (val && typeof val === 'string') {
     return Number(val);
-  } else if (val && typeof val === "number") {
+  } else if (val && typeof val === 'number') {
     return val;
   }
   return defaultValue || 0;
@@ -230,7 +238,7 @@ const CustomTooltip = ({
   const value = payload ? payload[0].value : 0;
   const percentage = totalCount ? Math.round((value / totalCount) * 100) : 0;
 
-  return (
+  return name !== 'other' ? (
     <div style={TOOL_TIP_STYLE}>
       <p style={LABEL_STYLE}>{name}</p>
       <p style={COUNT_STYLE}>
@@ -239,6 +247,8 @@ const CustomTooltip = ({
         %)
       </p>
     </div>
+  ) : (
+    <div>No data</div>
   );
 };
 

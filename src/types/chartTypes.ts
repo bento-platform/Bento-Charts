@@ -1,11 +1,13 @@
-export type ChartDataType = ChartDataItem[]
+import { PieProps, BarProps } from 'recharts';
+
+export type ChartDataType = ChartDataItem[];
 
 export interface ChartDataItem {
   x: string;
   y: number;
 }
 
-export type TooltipPayload = TooltipPayloadItem[]
+export type TooltipPayload = TooltipPayloadItem[];
 
 interface TooltipPayloadItem {
   name: string;
@@ -61,10 +63,13 @@ interface BaseChartProps {
 export interface PieChartProps extends BaseChartProps {
   colorTheme?: keyof ChartTheme['pie'];
   sort?: boolean;
+  onClick?: PieProps['onClick'];
+  chartThreshold?: number;
 }
 
 export interface BarChartProps extends BaseChartProps {
   colorTheme?: keyof ChartTheme['bar'];
   title?: string;
   units: string;
+  onClick?: BarProps['onClick'];
 }
