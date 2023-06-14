@@ -3,49 +3,54 @@ import React, { useContext } from 'react';
 import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
 import { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
 
-const ChartThemeContext = React.createContext<ChartTheme>(DEFAULT_CHART_THEME);
+type ChartContextType = {
+  theme: ChartTheme;
+  translation: LngDictionary;
+  threshold: number;
+};
+
+const DEFAULT_CONTEXT: ChartContextType = {
+  theme: DEFAULT_CHART_THEME,
+  translation: defaultTranslationObject.en,
+  threshold: 0,
+};
+
+const ChartContext = React.createContext<ChartContextType>(DEFAULT_CONTEXT);
+
 export function useChartTheme() {
-  return useContext(ChartThemeContext);
+  return useContext(ChartContext).theme;
 }
 
-const ChartTranslationContext = React.createContext<LngDictionary>(defaultTranslationObject.en);
 export function useChartTranslation() {
-  return useContext(ChartTranslationContext);
+  return useContext(ChartContext).translation;
 }
-
-const ChartThresholdContext = React.createContext<number>(0);
 
 export function useChartThreshold() {
-  return useContext(ChartThresholdContext);
+  return useContext(ChartContext).threshold;
 }
 
-// TODO: reduce number of contexts
-const ChartConfigProvider = ({
-  theme = DEFAULT_CHART_THEME,
-  Lng,
-  translationMap,
-  children,
-  globalThreshold = 0,
-}: {
-  theme?: ChartTheme;
-  Lng: string;
-  translationMap?: TranslationObject;
-  children: React.ReactElement;
-  globalThreshold?: number;
-}) => {
+const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThreshold }: ChartConfigProviderProps) => {
   let lang: SupportedLng = 'en';
   try {
     lang = Lng as SupportedLng;
   } catch (e) {
     console.error('Lng is not a supported language');
+    return null;
   }
-  return (
-    <ChartThemeContext.Provider value={theme}>
-      <ChartTranslationContext.Provider value={translationMap ? translationMap[lang] : defaultTranslationObject[lang]}>
-        <ChartThresholdContext.Provider value={globalThreshold}>{children}</ChartThresholdContext.Provider>
-      </ChartTranslationContext.Provider>
-    </ChartThemeContext.Provider>
-  );
+  const contextValue = {
+    theme: theme ?? DEFAULT_CONTEXT.theme,
+    translation: translationMap ? translationMap[lang] : defaultTranslationObject[lang],
+    threshold: globalThreshold ?? DEFAULT_CONTEXT.threshold,
+  };
+  return <ChartContext.Provider value={contextValue}>{children}</ChartContext.Provider>;
+};
+
+type ChartConfigProviderProps = {
+  theme?: ChartTheme;
+  Lng: string;
+  translationMap?: TranslationObject;
+  children: React.ReactElement;
+  globalThreshold?: number;
 };
 
 export default ChartConfigProvider;
