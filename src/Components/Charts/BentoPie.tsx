@@ -14,10 +14,10 @@ import {
   LABEL_THRESHOLD,
   COUNT_TEXT_STYLE,
   TEXT_STYLE,
-} from '../constants/chartConstants';
-import type { PieChartProps, TooltipPayload } from '../types/chartTypes';
-import { useChartTheme, useChartTranslation, useChartThreshold } from '../ChartConfigProvider';
-import { polarToCartesian } from '../util/chartUtils';
+} from '../../constants/chartConstants';
+import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
+import { useChartTheme, useChartTranslation, useChartThreshold } from '../../ChartConfigProvider';
+import { polarToCartesian } from '../../util/chartUtils';
 
 const labelShortName = (name: string) => {
   if (name.length <= MAX_LABEL_CHARS) {

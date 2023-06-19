@@ -11,10 +11,10 @@ import {
   TICKS_SHOW_ALL_LABELS_BELOW,
   UNITS_LABEL_OFFSET,
   TICK_MARGIN,
-} from '../constants/chartConstants';
+} from '../../constants/chartConstants';
 
-import type { BarChartProps, ChartDataItem, TooltipPayload } from '../types/chartTypes';
-import { useChartTheme, useChartTranslation } from '../ChartConfigProvider';
+import type { BarChartProps, ChartDataItem, TooltipPayload } from '../../types/chartTypes';
+import { useChartTheme, useChartTranslation } from '../../ChartConfigProvider';
 
 const tickFormatter = (tickLabel: string) => {
   if (tickLabel.length <= MAX_TICK_LABEL_CHARS) {
