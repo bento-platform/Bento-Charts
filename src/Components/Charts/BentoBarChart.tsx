@@ -15,6 +15,7 @@ import {
 
 import type { BarChartProps, ChartDataItem, TooltipPayload } from '../../types/chartTypes';
 import { useChartTheme, useChartTranslation } from '../../ChartConfigProvider';
+import NoData from '../NoData';
 
 const tickFormatter = (tickLabel: string) => {
   if (tickLabel.length <= MAX_TICK_LABEL_CHARS) {
@@ -46,6 +47,8 @@ const BentoBarChart = ({
   if (postFilter) data = data.filter(postFilter);
 
   if (removeEmpty) data = data.filter((d) => d.y !== 0);
+
+  if (data.length === 0) return <NoData height={height} />;
 
   const totalCount = data.reduce((sum, e) => sum + e.y, 0);
 

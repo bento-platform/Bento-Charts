@@ -18,6 +18,7 @@ import {
 import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
 import { useChartTheme, useChartTranslation, useChartThreshold } from '../../ChartConfigProvider';
 import { polarToCartesian } from '../../util/chartUtils';
+import NoData from '../NoData';
 
 const labelShortName = (name: string) => {
   if (name.length <= MAX_LABEL_CHARS) {
@@ -69,6 +70,10 @@ const BentoPie = ({
       x: t['Other'],
       y: sum - data.reduce((acc, e) => acc + e.y, 0),
     });
+  }
+
+  if (data.length === 0) {
+    return <NoData height={height} />;
   }
 
   const bentoFormatData = data.map((e) => ({ name: e.x, value: e.y }));
