@@ -8,7 +8,7 @@
     "build": "npx tsc",
     "prepublishOnly": "npm run build",
     "lint": "npx eslint src/**",
-    "buildpack": "npx tsc && npm pack --pack-destination ./packs"
+    "buildpack": "rm ./packs/*.tgz && tsc && npm pack --pack-destination ./packs"
   },
   "release": {
     "branches": [
@@ -37,8 +37,8 @@
   },
   "homepage": "https://github.com/bento-platform/Bento-Charts#readme",
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": ">=16.0.0",
+    "react-dom": ">=14.0.0",
     "recharts": "^2.4.3"
   },
   "devDependencies": {
