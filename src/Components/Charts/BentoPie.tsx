@@ -144,7 +144,7 @@ const toNumber = (val: number | string | undefined, defaultValue?: number): numb
   return defaultValue || 0;
 };
 
-const RenderLabel = (maxLabelChars: number): PieProps['label'] => (params: PieLabelRenderProps ) => {
+const RenderLabel = (maxLabelChars: number): PieProps['label'] => (params: PieLabelRenderProps ) => { // eslint-disable-line
   const { fill, payload, index, activeIndex } = params;
   const percent = params.percent || 0;
   const midAngle = params.midAngle || 0;
