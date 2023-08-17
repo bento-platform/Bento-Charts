@@ -9,23 +9,27 @@ import {
   CHART_MISSING_FILL,
   CHART_WRAPPER_STYLE,
   RADIAN,
-  MAX_LABEL_CHARS,
   CHART_ASPECT_RATIO,
   LABEL_THRESHOLD,
   COUNT_TEXT_STYLE,
   TEXT_STYLE,
 } from '../../constants/chartConstants';
 import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
-import { useChartTheme, useChartTranslation, useChartThreshold } from '../../ChartConfigProvider';
+import {
+  useChartTheme,
+  useChartTranslation,
+  useChartThreshold,
+  useChartMaxLabelChars
+} from "../../ChartConfigProvider";
 import { polarToCartesian } from '../../util/chartUtils';
 import NoData from '../NoData';
 
-const labelShortName = (name: string) => {
-  if (name.length <= MAX_LABEL_CHARS) {
+const labelShortName = (name: string, maxChars: number) => {
+  if (name.length <= maxChars) {
     return name;
   }
   // removing 3 character cause ... s add three characters
-  return `${name.substring(0, MAX_LABEL_CHARS - 3)}\u2026`;
+  return `${name.substring(0, maxChars - 3)}\u2026`;
 };
 
 const BentoPie = ({
@@ -39,6 +43,7 @@ const BentoPie = ({
   removeEmpty = true,
   colorTheme = 'default',
   chartThreshold = useChartThreshold(),
+  maxLabelChars = useChartMaxLabelChars(),
 }: PieChartProps) => {
   const t = useChartTranslation();
   const theme = useChartTheme().pie[colorTheme];
@@ -103,7 +108,7 @@ const BentoPie = ({
             cy="50%"
             innerRadius={35}
             outerRadius={80}
-            label={RenderLabel}
+            label={RenderLabel(maxLabelChars)}
             labelLine={false}
             isAnimationActive={false}
             onMouseEnter={onEnter}
@@ -139,7 +144,7 @@ const toNumber = (val: number | string | undefined, defaultValue?: number): numb
   return defaultValue || 0;
 };
 
-const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
+const RenderLabel = (maxLabelChars: number): PieProps['label'] => (params: PieLabelRenderProps ) => { // eslint-disable-line
   const { fill, payload, index, activeIndex } = params;
   const percent = params.percent || 0;
   const midAngle = params.midAngle || 0;
@@ -189,7 +194,7 @@ const RenderLabel: PieProps['label'] = (params: PieLabelRenderProps) => {
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 3} textAnchor={textAnchor} style={currentTextStyle}>
-        {labelShortName(name)}
+        {labelShortName(name, maxLabelChars)}
       </text>
       <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={14} textAnchor={textAnchor} style={COUNT_TEXT_STYLE}>
         {`(${payload.value})`}
