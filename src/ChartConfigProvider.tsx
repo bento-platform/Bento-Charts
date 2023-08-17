@@ -7,12 +7,14 @@ type ChartContextType = {
   theme: ChartTheme;
   translation: LngDictionary;
   threshold: number;
+  maxLabelChars: number;
 };
 
 const DEFAULT_CONTEXT: ChartContextType = {
   theme: DEFAULT_CHART_THEME,
   translation: defaultTranslationObject.en,
   threshold: 0,
+  maxLabelChars: 14,
 };
 
 const ChartContext = React.createContext<ChartContextType>(DEFAULT_CONTEXT);
@@ -29,7 +31,11 @@ export function useChartThreshold() {
   return useContext(ChartContext).threshold;
 }
 
-const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThreshold }: ChartConfigProviderProps) => {
+export function useChartMaxLabelChars() {
+  return useContext(ChartContext).maxLabelChars;
+}
+
+const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThreshold, maxLabelChars }: ChartConfigProviderProps) => {
   let lang: SupportedLng = 'en';
   try {
     lang = Lng as SupportedLng;
@@ -41,6 +47,7 @@ const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThres
     theme: theme ?? DEFAULT_CONTEXT.theme,
     translation: translationMap ? translationMap[lang] : defaultTranslationObject[lang],
     threshold: globalThreshold ?? DEFAULT_CONTEXT.threshold,
+    maxLabelChars: maxLabelChars ?? DEFAULT_CONTEXT.maxLabelChars,
   };
   return <ChartContext.Provider value={contextValue}>{children}</ChartContext.Provider>;
 };
@@ -51,6 +58,7 @@ type ChartConfigProviderProps = {
   translationMap?: TranslationObject;
   children: React.ReactElement;
   globalThreshold?: number;
+  maxLabelChars?: number;
 };
 
 export default ChartConfigProvider;

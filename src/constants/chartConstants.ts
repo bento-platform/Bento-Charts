@@ -113,7 +113,6 @@ export const TICK_MARGIN = 5; // vertical spacing between tick line and tick lab
 // pie chart
 export const CHART_ASPECT_RATIO = 1.4;
 export const LABEL_THRESHOLD = 0.05;
-export const MAX_LABEL_CHARS = 14;
 export const OTHER_THRESHOLD = 0.01;
 
 // ################### UTIL CONSTANTS ###################

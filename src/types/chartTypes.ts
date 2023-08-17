@@ -65,6 +65,7 @@ export interface PieChartProps extends BaseChartProps {
   sort?: boolean;
   onClick?: PieProps['onClick'];
   chartThreshold?: number;
+  maxLabelChars?: number;
 }
 
 export interface BarChartProps extends BaseChartProps {
