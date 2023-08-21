@@ -8,8 +8,7 @@ export interface CategoricalChartDataItem {
 }
 
 export interface GeoPointDataItem {
-  lng: number;
-  lat: number;
+  coordinates: [number, number];
   title: string;
 }
 

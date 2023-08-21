@@ -12,9 +12,9 @@ const BentoPointMap = ({
       <MapContainer>
         <BentoOSMTileLayer />
         {data.map((point) => {
-          const { lat, lng, title } = point;
+          const { coordinates, title } = point;
 
-          return <Marker position={[lat, lng]}>
+          return <Marker position={coordinates}>
             <Popup>
               {onClick ? <h4><a onClick={() => onClick(point)}></a></h4> : <h4>{title}</h4>}
             </Popup>
