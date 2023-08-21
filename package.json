@@ -37,14 +37,17 @@
   },
   "homepage": "https://github.com/bento-platform/Bento-Charts#readme",
   "peerDependencies": {
+    "leaflet": "^1.9.4",
     "react": ">=16.0.0",
     "react-dom": ">=14.0.0",
+    "react-leaflet": "^4.2.1",
     "recharts": "^2.4.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.4.4",
     "@commitlint/config-conventional": "^17.4.4",
     "@semantic-release/git": "^10.0.1",
+    "@types/leaflet": "^1.9.3",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.10",
     "@types/recharts": "^1.8.24",
