@@ -1,10 +1,15 @@
-import { PieProps, BarProps } from 'recharts';
+import {PieProps, BarProps} from 'recharts';
 
-export type ChartDataType = ChartDataItem[];
+export type CategoricalChartDataType = CategoricalChartDataItem[];
 
-export interface ChartDataItem {
+export interface CategoricalChartDataItem {
   x: string;
   y: number;
+}
+
+export interface GeoPointDataItem {
+  lng: number,
+  lat: number,
 }
 
 export type TooltipPayload = TooltipPayloadItem[];
@@ -36,7 +41,7 @@ export type FilterCallback<T> = (value: T, index: number, array: T[]) => boolean
 export type UnitaryMapCallback<T> = (value: T, index: number, array: T[]) => T;
 // export type BinaryMapCallback<T, U> = (value: T, index: number, array: T[]) => U;
 
-export type ChartFilterCallback = FilterCallback<ChartDataItem>;
+export type ChartFilterCallback = FilterCallback<CategoricalChartDataItem>;
 
 export type SupportedLng = 'en' | 'fr';
 
@@ -51,16 +56,19 @@ export type TranslationObject = {
 };
 
 // ###################  COMPONENT PROPS #####################
-interface BaseChartProps {
-  data: ChartDataType;
+interface BaseChartComponentProps {
   height: number;
   preFilter?: ChartFilterCallback;
-  dataMap?: UnitaryMapCallback<ChartDataItem>;
+  dataMap?: UnitaryMapCallback<CategoricalChartDataItem>;
   postFilter?: ChartFilterCallback;
+}
+
+interface BaseCategoricalChartProps extends BaseChartComponentProps {
+  data: CategoricalChartDataType;
   removeEmpty?: boolean;
 }
 
-export interface PieChartProps extends BaseChartProps {
+export interface PieChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['pie'];
   sort?: boolean;
   onClick?: PieProps['onClick'];
@@ -68,9 +76,17 @@ export interface PieChartProps extends BaseChartProps {
   maxLabelChars?: number;
 }
 
-export interface BarChartProps extends BaseChartProps {
+export interface BarChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['bar'];
   title?: string;
   units: string;
   onClick?: BarProps['onClick'];
+}
+
+interface BaseMapProps extends BaseChartComponentProps {
+  data: GeoPointDataItem[];
+}
+
+export interface PointMapProps extends BaseMapProps {
+
 }
