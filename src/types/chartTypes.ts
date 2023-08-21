@@ -8,9 +8,12 @@ export interface CategoricalChartDataItem {
 }
 
 export interface GeoPointDataItem {
-  lng: number,
-  lat: number,
+  lng: number;
+  lat: number;
+  title: string;
 }
+
+type PointMapOnClick = (point: GeoPointDataItem) => undefined;
 
 export type TooltipPayload = TooltipPayloadItem[];
 
@@ -84,9 +87,10 @@ export interface BarChartProps extends BaseCategoricalChartProps {
 }
 
 interface BaseMapProps extends BaseChartComponentProps {
-  data: GeoPointDataItem[];
 }
 
 export interface PointMapProps extends BaseMapProps {
+  data: GeoPointDataItem[];
+  onClick?: PointMapOnClick;
 
 }
