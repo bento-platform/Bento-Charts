@@ -17,7 +17,6 @@ export interface GeoPointDataItem {
 
 type PointMapOnClick = (point: GeoPointDataItem) => void;
 
-// type FillColorFunction = (cat: string) => ColorComponents;
 type GeoJSONShapeClickFunction = (shape: GeoJSONFeatureType) => void;
 
 export type TooltipPayload = TooltipPayloadItem[];
@@ -103,16 +102,27 @@ export interface PointMapProps extends BaseMapProps {
   onClick?: PointMapOnClick;
 }
 
+export interface MapDiscreteLegendItem {
+  color: string | undefined;
+  label: string;
+}
+
 export interface ChoroplethMapColorModeContinuous {
   mode: 'continuous';
   minColor: string;
   maxColor: string;
 }
 
+export interface ChoroplethMapColorModeDiscrete {
+  mode: 'discrete';
+  colorFunction: (x: number | undefined) => string;
+  legendItems: MapDiscreteLegendItem[];
+}
+
 export interface ChoroplethMapProps extends BaseMapProps {
   data: CategoricalChartDataType; // heatmaps are 'categorical' + geographical
   features: GeoJSONPolygonOnlyFeatureCollection;
-  colorMode: ChoroplethMapColorModeContinuous; // TODO: add more
+  colorMode: ChoroplethMapColorModeContinuous | ChoroplethMapColorModeDiscrete;
   categoryProp: string;
   onClick?: GeoJSONShapeClickFunction;
 }

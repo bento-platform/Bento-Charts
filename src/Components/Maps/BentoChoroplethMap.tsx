@@ -7,6 +7,7 @@ import BentoOSMTileLayer from '../BentoOSMTileLayer';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 import type { PathOptions, GeoJSON as LeafletGeoJSON, LeafletMouseEvent, LeafletEventHandlerFnMap } from 'leaflet';
 import MapLegendContinuous from './controls/MapLegendContinuous';
+import MapLegendDiscrete from './controls/MapLegendDiscrete';
 
 const DEFAULT_CATEGORY = '';
 const POS_BOTTOM_RIGHT: MapControlPosition = ['bottom', 'right'];
@@ -26,11 +27,12 @@ const BentoChoroplethMap = ({
   const minYVal = useMemo(() => Math.min(...data.map((d) => d.y)), [data]);
   const maxYVal = useMemo(() => Math.max(...data.map((d) => d.y)), [data]);
 
-  const interpolator = useMemo(() => interpolateRgb(colorMode.minColor, colorMode.maxColor), [colorMode]);
-
   const calculateColor = useCallback(
-    (v: number | undefined): string => interpolator(((v ?? minYVal) - minYVal) / (maxYVal - minYVal)),
-    [interpolator, minYVal, maxYVal]
+    (v: number | undefined): string =>
+      colorMode.mode === 'continuous'
+        ? interpolateRgb(colorMode.minColor, colorMode.maxColor)(((v ?? minYVal) - minYVal) / (maxYVal - minYVal))
+        : colorMode.colorFunction(v),
+    [minYVal, maxYVal]
   );
 
   const shapeStyle = useCallback(
@@ -96,13 +98,18 @@ const BentoChoroplethMap = ({
         <GeoJSON ref={geoJsonLayer} data={features} style={shapeStyle} eventHandlers={eventHandlers}>
           <Popup>{popupContents}</Popup>
         </GeoJSON>
-        <MapLegendContinuous
-          position={POS_BOTTOM_RIGHT}
-          minColor={colorMode.minColor}
-          minValue={minYVal}
-          maxColor={colorMode.maxColor}
-          maxValue={maxYVal}
-        />
+        {colorMode.mode === 'continuous' ? (
+          <MapLegendContinuous
+            position={POS_BOTTOM_RIGHT}
+            minColor={colorMode.minColor}
+            minValue={minYVal}
+            maxColor={colorMode.maxColor}
+            maxValue={maxYVal}
+          />
+        ) : (
+          <MapLegendDiscrete position={POS_BOTTOM_RIGHT} legendItems={colorMode.legendItems} />
+        )}
+
       </MapContainer>
     </div>
   );
