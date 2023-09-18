@@ -1,3 +1,4 @@
+import React from 'react';
 import { MapControlPosition } from '../../../types/chartTypes';
 import { controlPositionToClasses } from './utils';
 

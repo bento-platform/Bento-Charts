@@ -1,4 +1,5 @@
-import { ColorComponents, MapControlPosition } from '../../../types/chartTypes';
+import React from 'react';
+import { MapControlPosition } from '../../../types/chartTypes';
 import { controlPositionToClasses } from './utils';
 
 export interface MapLegendDiscreteProps {
