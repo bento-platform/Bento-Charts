@@ -1,4 +1,7 @@
-import {PieProps, BarProps} from 'recharts';
+import { PieProps, BarProps } from 'recharts';
+
+import type { Feature as GeoJSONFeatureType } from 'geojson';
+import { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
 
@@ -12,7 +15,10 @@ export interface GeoPointDataItem {
   title: string;
 }
 
-type PointMapOnClick = (point: GeoPointDataItem) => undefined;
+type PointMapOnClick = (point: GeoPointDataItem) => void;
+
+// type FillColorFunction = (cat: string) => ColorComponents;
+type GeoJSONShapeClickFunction = (shape: GeoJSONFeatureType) => void;
 
 export type TooltipPayload = TooltipPayloadItem[];
 
@@ -25,6 +31,9 @@ interface TooltipPayloadItem {
 }
 
 export type HexColor = `#${string}`;
+export type ColorComponents = [number, number, number];
+
+export type MapControlPosition = ["top" | "bottom", "left" | "right"];
 
 export type ChartTheme = {
   pie: {
@@ -86,10 +95,25 @@ export interface BarChartProps extends BaseCategoricalChartProps {
 }
 
 interface BaseMapProps extends BaseChartComponentProps {
+  center: [number, number],
+  zoom: number,
 }
 
 export interface PointMapProps extends BaseMapProps {
   data: GeoPointDataItem[];
   onClick?: PointMapOnClick;
+}
 
+export interface ChoroplethMapColorModeContinuous {
+  mode: "continuous",
+  minColor: string,
+  maxColor: string,
+}
+
+export interface ChoroplethMapProps extends BaseMapProps {
+  data: CategoricalChartDataType;  // heatmaps are 'categorical' + geographical
+  features: GeoJSONPolygonOnlyFeatureCollection;
+  colorMode: ChoroplethMapColorModeContinuous;  // TODO: add more
+  categoryProp: string;
+  onClick?: GeoJSONShapeClickFunction;
 }
