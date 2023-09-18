@@ -33,7 +33,7 @@ interface TooltipPayloadItem {
 export type HexColor = `#${string}`;
 export type ColorComponents = [number, number, number];
 
-export type MapControlPosition = ["top" | "bottom", "left" | "right"];
+export type MapControlPosition = ['top' | 'bottom', 'left' | 'right'];
 
 export type ChartTheme = {
   pie: {
@@ -95,8 +95,8 @@ export interface BarChartProps extends BaseCategoricalChartProps {
 }
 
 interface BaseMapProps extends BaseChartComponentProps {
-  center: [number, number],
-  zoom: number,
+  center: [number, number];
+  zoom: number;
 }
 
 export interface PointMapProps extends BaseMapProps {
@@ -105,15 +105,15 @@ export interface PointMapProps extends BaseMapProps {
 }
 
 export interface ChoroplethMapColorModeContinuous {
-  mode: "continuous",
-  minColor: string,
-  maxColor: string,
+  mode: 'continuous';
+  minColor: string;
+  maxColor: string;
 }
 
 export interface ChoroplethMapProps extends BaseMapProps {
-  data: CategoricalChartDataType;  // heatmaps are 'categorical' + geographical
+  data: CategoricalChartDataType; // heatmaps are 'categorical' + geographical
   features: GeoJSONPolygonOnlyFeatureCollection;
-  colorMode: ChoroplethMapColorModeContinuous;  // TODO: add more
+  colorMode: ChoroplethMapColorModeContinuous; // TODO: add more
   categoryProp: string;
   onClick?: GeoJSONShapeClickFunction;
 }

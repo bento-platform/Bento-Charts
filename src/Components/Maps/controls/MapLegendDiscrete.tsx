@@ -2,11 +2,11 @@ import { MapControlPosition } from '../../../types/chartTypes';
 import { controlPositionToClasses } from './utils';
 
 export interface MapLegendDiscreteProps {
-  position: MapControlPosition
+  position: MapControlPosition;
   legendItems: {
-    key: number | string,
-    label: string,
-    color: string | undefined,
+    key: number | string;
+    label: string;
+    color: string | undefined;
   }[];
 }
 
@@ -27,7 +27,7 @@ const MapLegendDiscrete = ({ position, legendItems }: MapLegendDiscreteProps) =>
         </ul>
       </div>
     </div>
-  )
+  );
 };
 
 export default MapLegendDiscrete;

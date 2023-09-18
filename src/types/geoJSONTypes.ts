@@ -1,5 +1,5 @@
 export interface GeoJSONGeomPolygon {
-  type: "Polygon";
+  type: 'Polygon';
   coordinates: number[][][];
 }
 
@@ -9,12 +9,12 @@ export interface BentoGeoJSONProperties {
 }
 
 export interface GeoJSONPolygonFeature {
-  type: "Feature";
+  type: 'Feature';
   geometry: GeoJSONGeomPolygon;
   properties: BentoGeoJSONProperties;
 }
 
 export interface GeoJSONPolygonOnlyFeatureCollection {
-  type: "FeatureCollection";
+  type: 'FeatureCollection';
   features: GeoJSONPolygonFeature[];
 }

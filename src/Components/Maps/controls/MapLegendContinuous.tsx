@@ -25,7 +25,7 @@ const MapLegendContinuous = ({ position, minValue, minColor, maxValue, maxColor 
         </div>
       </div>
     </div>
-  )
+  );
 };
 
 export default MapLegendContinuous;
