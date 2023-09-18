@@ -109,7 +109,6 @@ const BentoChoroplethMap = ({
         ) : (
           <MapLegendDiscrete position={POS_BOTTOM_RIGHT} legendItems={colorMode.legendItems} />
         )}
-
       </MapContainer>
     </div>
   );
