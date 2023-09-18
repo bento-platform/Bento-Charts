@@ -62,7 +62,7 @@ const BentoChoroplethMap = ({
           const fProps = feature.properties ?? {};
           const title = fProps.title ? `${fProps.title} (${fProps[categoryProp]})` : fProps[categoryProp];
           setPopupContents(
-            <div>
+            <h4>
               {onClick ? (
                 <a
                   href="#"
@@ -75,7 +75,7 @@ const BentoChoroplethMap = ({
               ) : (
                 <span>{title}</span>
               )}
-            </div>
+            </h4>
           );
         },
       } as LeafletEventHandlerFnMap),
