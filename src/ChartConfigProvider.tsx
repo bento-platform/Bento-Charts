@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
-import { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
+import type { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
 
 type ChartContextType = {
   theme: ChartTheme;

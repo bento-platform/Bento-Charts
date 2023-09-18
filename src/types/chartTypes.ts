@@ -1,7 +1,7 @@
 import { PieProps, BarProps } from 'recharts';
 
 import type { Feature as GeoJSONFeatureType } from 'geojson';
-import { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
+import type { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
 
@@ -31,7 +31,6 @@ interface TooltipPayloadItem {
 }
 
 export type HexColor = `#${string}`;
-export type ColorComponents = [number, number, number];
 
 export type MapControlPosition = ['top' | 'bottom', 'left' | 'right'];
 

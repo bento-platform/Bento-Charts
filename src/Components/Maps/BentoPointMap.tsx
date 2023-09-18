@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapContainer, Marker, Popup } from 'react-leaflet';
-import { PointMapProps } from '../../types/chartTypes';
+import type { PointMapProps } from '../../types/chartTypes';
 import BentoOSMTileLayer from '../BentoOSMTileLayer';
 
 const BentoPointMap = ({ data, onClick }: PointMapProps) => {

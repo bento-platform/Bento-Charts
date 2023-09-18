@@ -1,7 +1,7 @@
 import React, { Ref, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GeoJSON, MapContainer, Popup } from 'react-leaflet';
 import { interpolateRgb } from 'd3-interpolate';
-import { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
+import type { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
 import BentoOSMTileLayer from '../BentoOSMTileLayer';
 
 import type { Feature as GeoJSONFeatureType } from 'geojson';
