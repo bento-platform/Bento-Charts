@@ -17,4 +17,5 @@ export interface GeoJSONPolygonFeature {
 export interface GeoJSONPolygonOnlyFeatureCollection {
   type: 'FeatureCollection';
   features: GeoJSONPolygonFeature[];
+  [x: string]: unknown;
 }
