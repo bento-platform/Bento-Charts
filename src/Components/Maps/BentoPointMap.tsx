@@ -1,6 +1,6 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import BentoMapContainer from '../BentoMapContainer';
+import BentoMapContainer from './BentoMapContainer';
 import type { PointMapProps } from '../../types/chartTypes';
 
 const BentoPointMap = ({ height, center, zoom, data, onClick, renderPopupBody }: PointMapProps) => {

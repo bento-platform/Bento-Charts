@@ -6,7 +6,7 @@ import type { PathOptions, GeoJSON as LeafletGeoJSON, LeafletMouseEvent, Leaflet
 
 import type { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
 
-import BentoMapContainer from '../BentoMapContainer';
+import BentoMapContainer from './BentoMapContainer';
 import MapLegendContinuous from './controls/MapLegendContinuous';
 import MapLegendDiscrete from './controls/MapLegendDiscrete';
 

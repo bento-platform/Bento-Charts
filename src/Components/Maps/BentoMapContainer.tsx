@@ -4,7 +4,7 @@ import { MapContainer } from 'react-leaflet';
 import L, { Point } from 'leaflet';
 
 import BentoOSMTileLayer from './BentoOSMTileLayer';
-import type { BaseMapProps } from '../types/chartTypes';
+import type { BaseMapProps } from '../../types/chartTypes';
 
 import iconPng from 'leaflet/dist/images/marker-icon.png';
 import icon2XPng from 'leaflet/dist/images/marker-icon-2x.png';
