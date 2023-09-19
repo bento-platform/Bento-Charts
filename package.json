@@ -37,7 +37,6 @@
   },
   "homepage": "https://github.com/bento-platform/Bento-Charts#readme",
   "peerDependencies": {
-    "geojson": "^0.5.0",
     "leaflet": "^1.9.4",
     "react": ">=16.0.0",
     "react-dom": ">=14.0.0",
@@ -80,6 +79,7 @@
     "printWidth": 120
   },
   "dependencies": {
-    "d3-interpolate": "^3.0.1"
+    "d3-interpolate": "^3.0.1",
+    "geojson": "^0.5.0"
   }
 }
