@@ -101,6 +101,7 @@ interface BaseMapProps extends BaseChartComponentProps {
 export interface PointMapProps extends BaseMapProps {
   data: GeoPointDataItem[];
   onClick?: PointMapOnClick;
+  renderPopupBody?: (p: GeoPointDataItem) => ReactNode;
 }
 
 export interface MapDiscreteLegendItem {

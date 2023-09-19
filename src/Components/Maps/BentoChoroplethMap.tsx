@@ -13,10 +13,10 @@ const DEFAULT_CATEGORY = '';
 const POS_BOTTOM_RIGHT: MapControlPosition = ['bottom', 'right'];
 
 const BentoChoroplethMap = ({
-  data,
   height,
   center,
   zoom,
+  data,
   colorMode,
   features,
   categoryProp,
@@ -96,25 +96,23 @@ const BentoChoroplethMap = ({
   }, [features]);
 
   return (
-    <div>
-      <MapContainer style={{ height }} center={center} zoom={zoom}>
-        <BentoOSMTileLayer />
-        <GeoJSON ref={geoJsonLayer} data={features} style={shapeStyle} eventHandlers={eventHandlers}>
-          <Popup>{popupContents}</Popup>
-        </GeoJSON>
-        {colorMode.mode === 'continuous' ? (
-          <MapLegendContinuous
-            position={POS_BOTTOM_RIGHT}
-            minColor={colorMode.minColor}
-            minValue={minYVal}
-            maxColor={colorMode.maxColor}
-            maxValue={maxYVal}
-          />
-        ) : (
-          <MapLegendDiscrete position={POS_BOTTOM_RIGHT} legendItems={colorMode.legendItems} />
-        )}
-      </MapContainer>
-    </div>
+    <MapContainer style={{ height }} center={center} zoom={zoom}>
+      <BentoOSMTileLayer />
+      <GeoJSON ref={geoJsonLayer} data={features} style={shapeStyle} eventHandlers={eventHandlers}>
+        <Popup>{popupContents}</Popup>
+      </GeoJSON>
+      {colorMode.mode === 'continuous' ? (
+        <MapLegendContinuous
+          position={POS_BOTTOM_RIGHT}
+          minColor={colorMode.minColor}
+          minValue={minYVal}
+          maxColor={colorMode.maxColor}
+          maxValue={maxYVal}
+        />
+      ) : (
+        <MapLegendDiscrete position={POS_BOTTOM_RIGHT} legendItems={colorMode.legendItems} />
+      )}
+    </MapContainer>
   );
 };
 
