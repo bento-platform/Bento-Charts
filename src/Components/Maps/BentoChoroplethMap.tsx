@@ -83,7 +83,7 @@ const BentoChoroplethMap = ({
           );
         },
       } as LeafletEventHandlerFnMap),
-    [onClick, categoryProp, renderPopupBody],
+    [onClick, categoryProp, renderPopupBody]
   );
 
   const geoJsonLayer: Ref<LeafletGeoJSON> = useRef(null);
