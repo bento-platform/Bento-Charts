@@ -93,7 +93,8 @@ export interface BarChartProps extends BaseCategoricalChartProps {
   onClick?: BarProps['onClick'];
 }
 
-interface BaseMapProps extends BaseChartComponentProps {
+export interface BaseMapProps extends BaseChartComponentProps {
+  height: number;
   center: [number, number];
   zoom: number;
 }

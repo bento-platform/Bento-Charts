@@ -1,11 +1,12 @@
 import React, { Ref, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { GeoJSON, MapContainer, Popup } from 'react-leaflet';
+import { GeoJSON, Popup } from 'react-leaflet';
 import { interpolateRgb } from 'd3-interpolate';
-import type { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
-import BentoOSMTileLayer from '../BentoOSMTileLayer';
-
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 import type { PathOptions, GeoJSON as LeafletGeoJSON, LeafletMouseEvent, LeafletEventHandlerFnMap } from 'leaflet';
+
+import type { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
+
+import BentoMapContainer from '../BentoMapContainer';
 import MapLegendContinuous from './controls/MapLegendContinuous';
 import MapLegendDiscrete from './controls/MapLegendDiscrete';
 
@@ -96,8 +97,7 @@ const BentoChoroplethMap = ({
   }, [features]);
 
   return (
-    <MapContainer style={{ height }} center={center} zoom={zoom}>
-      <BentoOSMTileLayer />
+    <BentoMapContainer height={height} center={center} zoom={zoom}>
       <GeoJSON ref={geoJsonLayer} data={features} style={shapeStyle} eventHandlers={eventHandlers}>
         <Popup>{popupContents}</Popup>
       </GeoJSON>
@@ -112,7 +112,7 @@ const BentoChoroplethMap = ({
       ) : (
         <MapLegendDiscrete position={POS_BOTTOM_RIGHT} legendItems={colorMode.legendItems} />
       )}
-    </MapContainer>
+    </BentoMapContainer>
   );
 };
 
