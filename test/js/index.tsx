@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import '../../src/styles.css';
 
 import BentoChoroplethMap from '../../src/Components/Maps/BentoChoroplethMap';
-import { TEST_HEATMAP_GEOJSON_FEATURES } from './test_data';
+import { TEST_HEATMAP_GEOJSON_FEATURES } from './testData';
 
 const BentoChartsTestApp = () => {
   return (
