@@ -1,6 +1,7 @@
-import { PieProps, BarProps } from 'recharts';
-
+import type { ReactNode } from 'react';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
+import type { PieProps, BarProps } from 'recharts';
+
 import type { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
@@ -125,4 +126,5 @@ export interface ChoroplethMapProps extends BaseMapProps {
   colorMode: ChoroplethMapColorModeContinuous | ChoroplethMapColorModeDiscrete;
   categoryProp: string;
   onClick?: GeoJSONShapeClickFunction;
+  renderPopupBody?: (f: GeoJSONFeatureType, d: number | undefined) => ReactNode;
 }

@@ -27,6 +27,7 @@ const BentoChartsTestApp = () => {
         height={600}
         center={[74.0694163, -112.7217838]}
         zoom={2.75}
+        renderPopupBody={(_f, d) => <>{d} samples</>}
       />
     </div>
   );

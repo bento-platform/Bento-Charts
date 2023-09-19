@@ -21,6 +21,7 @@ const BentoChoroplethMap = ({
   features,
   categoryProp,
   onClick,
+  renderPopupBody,
 }: ChoroplethMapProps) => {
   const dataByFeatureCat = useMemo(() => Object.fromEntries(data.map((d) => [d.x, d.y])), [data]);
 
@@ -62,24 +63,27 @@ const BentoChoroplethMap = ({
           const fProps = feature.properties ?? {};
           const title = fProps.title ? `${fProps.title} (${fProps[categoryProp]})` : fProps[categoryProp];
           setPopupContents(
-            <h4>
-              {onClick ? (
-                <a
-                  href="#"
-                  onClick={() => {
-                    if (onClick) onClick(feature);
-                  }}
-                >
-                  {title}
-                </a>
-              ) : (
-                <span>{title}</span>
-              )}
-            </h4>
+            <div>
+              <h4 style={{ marginBottom: renderPopupBody ? 6 : 0 }}>
+                {onClick ? (
+                  <a
+                    href="#"
+                    onClick={() => {
+                      if (onClick) onClick(feature);
+                    }}
+                  >
+                    {title}
+                  </a>
+                ) : (
+                  <span>{title}</span>
+                )}
+              </h4>
+              {renderPopupBody ? renderPopupBody(feature, dataByFeatureCat[fProps[categoryProp]]) : null}
+            </div>
           );
         },
       } as LeafletEventHandlerFnMap),
-    [onClick, categoryProp]
+    [onClick, categoryProp, renderPopupBody],
   );
 
   const geoJsonLayer: Ref<LeafletGeoJSON> = useRef(null);
