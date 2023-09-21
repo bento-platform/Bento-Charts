@@ -5,9 +5,8 @@
 export { default as BarChart } from './Components/Charts/BentoBarChart';
 export { default as PieChart } from './Components/Charts/BentoPie';
 
-// Maps
-export { default as PointMap } from './Components/Maps/BentoPointMap';
-export { default as ChoroplethMap } from './Components/Maps/BentoChoroplethMap';
+// Maps are not included in index.ts - instead, they need to be included from `bento-charts/maps`.
+// This way, we can have optional peer dependencies.
 
 export { default as ChartConfigProvider } from './ChartConfigProvider';
 export * from './types/chartTypes';

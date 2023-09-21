@@ -7,16 +7,15 @@ import 'antd/dist/reset.css';
 import 'leaflet/dist/leaflet.css';
 import '../../src/styles.css';
 
-import BentoChoroplethMap from '../../src/Components/Maps/BentoChoroplethMap';
 import { TEST_HEATMAP_GEOJSON_FEATURES } from './testData';
-import BentoPointMap from '../../src/Components/Maps/BentoPointMap';
+import { ChoroplethMap, PointMap } from '../../src/maps';
 
 const items: TabsProps['items'] = [
   {
     key: 'choropleth',
     label: 'Map: Choropleth',
     children: (
-      <BentoChoroplethMap
+      <ChoroplethMap
         features={TEST_HEATMAP_GEOJSON_FEATURES}
         categoryProp="pop"
         data={[{x: "AB", y: 50}, {x: "NB", y: 75}, {x: "SB", y: 60}]}
@@ -40,9 +39,8 @@ const items: TabsProps['items'] = [
     key: 'points',
     label: 'Map: Points',
     children: (
-      <BentoPointMap
+      <PointMap
         data={TEST_HEATMAP_GEOJSON_FEATURES.features[1].geometry.coordinates[0].map((c, i) => {
-          console.log(c);
           return {
             title: `point ${i}`,
             coordinates: c as [number, number],

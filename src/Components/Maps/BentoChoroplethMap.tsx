@@ -4,7 +4,7 @@ import { interpolateRgb } from 'd3-interpolate';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 import type { PathOptions, GeoJSON as LeafletGeoJSON, LeafletMouseEvent, LeafletEventHandlerFnMap } from 'leaflet';
 
-import type { MapControlPosition, ChoroplethMapProps } from '../../types/chartTypes';
+import type { MapControlPosition, ChoroplethMapProps } from '../../types/mapTypes';
 
 import BentoMapContainer from './BentoMapContainer';
 import MapLegendContinuous from './controls/MapLegendContinuous';
