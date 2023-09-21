@@ -25,9 +25,9 @@ interface MapContainerProps extends BaseMapProps {
   children: ReactNode;
 }
 
-const BentoMapContainer = ({ height, center, zoom, children }: MapContainerProps) => (
+const BentoMapContainer = ({ height, center, zoom, children, tileLayer }: MapContainerProps) => (
   <MapContainer style={{ height }} center={center} zoom={zoom}>
-    <BentoOSMTileLayer />
+    {tileLayer ?? <BentoOSMTileLayer />}
     {children}
   </MapContainer>
 );

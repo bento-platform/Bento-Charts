@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 import type { PieProps, BarProps } from 'recharts';
 
@@ -97,6 +97,7 @@ export interface BaseMapProps extends BaseChartComponentProps {
   height: number;
   center: [number, number];
   zoom: number;
+  tileLayer?: ReactElement;
 }
 
 export interface PointMapProps extends BaseMapProps {

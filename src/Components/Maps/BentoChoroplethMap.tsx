@@ -17,6 +17,7 @@ const BentoChoroplethMap = ({
   height,
   center,
   zoom,
+  tileLayer,
   data,
   colorMode,
   features,
@@ -97,7 +98,7 @@ const BentoChoroplethMap = ({
   }, [features]);
 
   return (
-    <BentoMapContainer height={height} center={center} zoom={zoom}>
+    <BentoMapContainer height={height} center={center} zoom={zoom} tileLayer={tileLayer}>
       <GeoJSON ref={geoJsonLayer} data={features} style={shapeStyle} eventHandlers={eventHandlers}>
         <Popup>{popupContents}</Popup>
       </GeoJSON>

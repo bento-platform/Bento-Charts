@@ -3,9 +3,9 @@ import { Marker, Popup } from 'react-leaflet';
 import BentoMapContainer from './BentoMapContainer';
 import type { PointMapProps } from '../../types/chartTypes';
 
-const BentoPointMap = ({ height, center, zoom, data, onClick, renderPopupBody }: PointMapProps) => {
+const BentoPointMap = ({ height, center, zoom, tileLayer, data, onClick, renderPopupBody }: PointMapProps) => {
   return (
-    <BentoMapContainer height={height} center={center} zoom={zoom}>
+    <BentoMapContainer height={height} center={center} zoom={zoom} tileLayer={tileLayer}>
       {data.map((point, i) => {
         const { coordinates, title } = point;
 
