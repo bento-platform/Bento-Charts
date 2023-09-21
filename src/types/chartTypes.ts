@@ -18,7 +18,7 @@ export interface GeoPointDataItem {
 
 type PointMapOnClick = (point: GeoPointDataItem) => void;
 
-type GeoJSONShapeClickFunction = (shape: GeoJSONFeatureType) => void;
+type GeoJSONShapeOnClick = (shape: GeoJSONFeatureType) => void;
 
 export type TooltipPayload = TooltipPayloadItem[];
 
@@ -127,6 +127,6 @@ export interface ChoroplethMapProps extends BaseMapProps {
   features: GeoJSONPolygonOnlyFeatureCollection;
   colorMode: ChoroplethMapColorModeContinuous | ChoroplethMapColorModeDiscrete;
   categoryProp: string;
-  onClick?: GeoJSONShapeClickFunction;
+  onClick?: GeoJSONShapeOnClick;
   renderPopupBody?: (f: GeoJSONFeatureType, d: number | undefined) => ReactNode;
 }
