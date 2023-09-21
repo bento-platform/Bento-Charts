@@ -8,7 +8,8 @@
     "build": "npx tsc",
     "prepublishOnly": "npm run build",
     "lint": "npx eslint src",
-    "buildpack": "rm ./packs/*.tgz && tsc && npm pack --pack-destination ./packs"
+    "buildpack": "rm ./packs/*.tgz && tsc && npm pack --pack-destination ./packs",
+    "test": "npx webpack-dev-server"
   },
   "release": {
     "branches": [

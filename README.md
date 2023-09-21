@@ -174,5 +174,5 @@ A small web application is included in the `test` folder to provide an easy manu
 This application can be launched with the following command:
 
 ```bash
-npx webpack-dev-server
+npm test
 ```
