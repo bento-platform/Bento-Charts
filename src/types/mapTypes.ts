@@ -4,7 +4,6 @@ import type { Feature as GeoJSONFeatureType } from 'geojson';
 import { BaseChartComponentProps, CategoricalChartDataType } from './chartTypes';
 import type { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
-
 export interface GeoPointDataItem {
   coordinates: [number, number];
   title: string;
@@ -54,4 +53,3 @@ export interface ChoroplethMapProps extends BaseMapProps {
   onClick?: GeoJSONShapeOnClick;
   renderPopupBody?: (f: GeoJSONFeatureType, d: number | undefined) => ReactNode;
 }
-

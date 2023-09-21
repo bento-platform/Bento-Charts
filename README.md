@@ -24,6 +24,12 @@ Add `bento-charts` as a dependency to another project:
 npm install bento-charts
 ```
 
+To install `bento-charts` with map support:
+
+```bash
+npm install bento-charts leaflet react-leaflet
+```
+
 
 
 ## Usage

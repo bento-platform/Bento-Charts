@@ -1,5 +1,3 @@
-import type { ReactElement, ReactNode } from 'react';
-import type { Feature as GeoJSONFeatureType } from 'geojson';
 import type { PieProps, BarProps } from 'recharts';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
