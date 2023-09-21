@@ -34,7 +34,7 @@ const BentoChoroplethMap = ({
       colorMode.mode === 'continuous'
         ? interpolateRgb(colorMode.minColor, colorMode.maxColor)(((v ?? minYVal) - minYVal) / (maxYVal - minYVal))
         : colorMode.colorFunction(v),
-    [minYVal, maxYVal]
+    [colorMode, minYVal, maxYVal]
   );
 
   const shapeStyle = useCallback(
