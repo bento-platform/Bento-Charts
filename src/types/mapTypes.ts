@@ -13,8 +13,6 @@ type PointMapOnClick = (point: GeoPointDataItem) => void;
 
 type GeoJSONShapeOnClick = (shape: GeoJSONFeatureType) => void;
 
-export type MapControlPosition = ['top' | 'bottom', 'left' | 'right'];
-
 export interface BaseMapProps extends BaseChartComponentProps {
   height: number;
   center: [number, number];

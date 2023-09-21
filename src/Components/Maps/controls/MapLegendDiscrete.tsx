@@ -1,15 +1,16 @@
 import React from 'react';
-import type { MapControlPosition, MapDiscreteLegendItem } from '../../../types/chartTypes';
-import { controlPositionToClasses } from './utils';
+import type { ControlPosition } from 'leaflet';
+import type { MapDiscreteLegendItem } from '../../../types/mapTypes';
+import { controlPositionClasses } from './utils';
 
 export interface MapLegendDiscreteProps {
-  position: MapControlPosition;
+  position: ControlPosition;
   legendItems: MapDiscreteLegendItem[];
 }
 
 const MapLegendDiscrete = ({ position, legendItems }: MapLegendDiscreteProps) => {
   return (
-    <div className={controlPositionToClasses(position)}>
+    <div className={controlPositionClasses[position]}>
       <div className="leaflet-control bento-charts--map--legend">
         <ul>
           {legendItems.map(({ label, color }, i) => (

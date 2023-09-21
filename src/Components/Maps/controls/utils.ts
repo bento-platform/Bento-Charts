@@ -1,3 +1,8 @@
-import type { MapControlPosition } from '../../../types/chartTypes';
+import type { ControlPosition } from 'leaflet';
 
-export const controlPositionToClasses = (pos: MapControlPosition): string => pos.map((p) => `leaflet-${p}`).join(' ');
+export const controlPositionClasses: {[x in ControlPosition]: string} = {
+  "bottomleft": "leaflet-bottom leaflet-left",
+  "bottomright": "leaflet-bottom leaflet-right",
+  "topleft": "leaflet-top leaflet-left",
+  "topright": "leaflet-bottom leaflet-right",
+};

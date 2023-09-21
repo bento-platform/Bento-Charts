@@ -1,9 +1,9 @@
 import React from 'react';
-import type { MapControlPosition } from '../../../types/chartTypes';
-import { controlPositionToClasses } from './utils';
+import type { ControlPosition } from 'leaflet';
+import { controlPositionClasses } from './utils';
 
 export interface MapLegendDiscreteProps {
-  position: MapControlPosition;
+  position: ControlPosition;
   minValue: number;
   minColor: string;
   maxValue: number;
@@ -12,7 +12,7 @@ export interface MapLegendDiscreteProps {
 
 const MapLegendContinuous = ({ position, minValue, minColor, maxValue, maxColor }: MapLegendDiscreteProps) => {
   return (
-    <div className={controlPositionToClasses(position)}>
+    <div className={controlPositionClasses[position]}>
       <div className="leaflet-control bento-charts--map--legend">
         <div className="bento-charts--map--legend--scale">
           <div
