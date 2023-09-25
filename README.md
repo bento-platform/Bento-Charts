@@ -72,7 +72,6 @@ import { BarChart, PieChart } from 'bento-charts';
 Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec68e2dd7f62f8d786148480ce5105f/src/types/chartTypes.ts#L51) for information on their props.
 
 
-
 ### Using a Map
 
 ```jsx
