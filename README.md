@@ -62,12 +62,25 @@ refer to [theme](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec
 
 
 
-## Using a Chart
+## Usage
+
+### Using a Chart
 
 ```jsx
 import { BarChart, PieChart } from 'bento-charts';
 ```
 Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec68e2dd7f62f8d786148480ce5105f/src/types/chartTypes.ts#L51) for information on their props.
+
+
+
+### Using a Map
+
+```jsx
+import { ChoroplethMap } from 'bento-charts/maps';
+```
+
+Here, note the sub-path on the import - this separation allows us to have the 
+map-related peer dependencies marked as "optional".
 
 
 
