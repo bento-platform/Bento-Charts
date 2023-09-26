@@ -35,7 +35,14 @@ export function useChartMaxLabelChars() {
   return useContext(ChartContext).maxLabelChars;
 }
 
-const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThreshold, maxLabelChars }: ChartConfigProviderProps) => {
+const ChartConfigProvider = ({
+  theme,
+  Lng,
+  translationMap,
+  children,
+  globalThreshold,
+  maxLabelChars,
+}: ChartConfigProviderProps) => {
   let lang: SupportedLng = 'en';
   try {
     lang = Lng as SupportedLng;

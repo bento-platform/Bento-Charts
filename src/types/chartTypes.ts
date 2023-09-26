@@ -37,6 +37,7 @@ export type UnitaryMapCallback<T> = (value: T, index: number, array: T[]) => T;
 // export type BinaryMapCallback<T, U> = (value: T, index: number, array: T[]) => U;
 
 export type ChartFilterCallback = FilterCallback<ChartDataItem>;
+export type ChartDataMapCallback = UnitaryMapCallback<ChartDataItem>;
 
 export type SupportedLng = 'en' | 'fr';
 
@@ -50,14 +51,17 @@ export type TranslationObject = {
   [key in SupportedLng]: LngDictionary;
 };
 
-// ###################  COMPONENT PROPS #####################
-interface BaseChartProps {
+export interface ChartDataWithTransforms {
   data: ChartDataType;
-  height: number;
   preFilter?: ChartFilterCallback;
-  dataMap?: UnitaryMapCallback<ChartDataItem>;
+  dataMap?: ChartDataMapCallback;
   postFilter?: ChartFilterCallback;
   removeEmpty?: boolean;
+}
+
+// ###################  COMPONENT PROPS #####################
+interface BaseChartProps extends ChartDataWithTransforms {
+  height: number;
 }
 
 export interface PieChartProps extends BaseChartProps {
