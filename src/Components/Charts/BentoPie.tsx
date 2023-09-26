@@ -83,10 +83,13 @@ const BentoPie = ({
     setActiveIndex(index);
   }, []);
 
-  const onHover: PieProps['onMouseOver'] = useCallback((data, _index, e) => {
-    const { target } = e;
-    if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
-  }, []);
+  const onHover: PieProps['onMouseOver'] = useCallback(
+    (data, _index, e) => {
+      const { target } = e;
+      if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
+    },
+    [onClick]
+  );
 
   const onLeave: PieProps['onMouseLeave'] = useCallback(() => {
     setActiveIndex(undefined);
