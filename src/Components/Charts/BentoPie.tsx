@@ -21,7 +21,7 @@ import {
   useChartThreshold,
   useChartMaxLabelChars,
 } from '../../ChartConfigProvider';
-import { applyChartDataTransforms, polarToCartesian } from '../../util/chartUtils';
+import { polarToCartesian, useTransformedChartData } from '../../util/chartUtils';
 import NoData from '../NoData';
 
 const labelShortName = (name: string, maxChars: number) => {
@@ -33,17 +33,13 @@ const labelShortName = (name: string, maxChars: number) => {
 };
 
 const BentoPie = ({
-  data: originalData,
   height,
-  preFilter,
-  dataMap,
-  postFilter,
   onClick,
   sort = true,
-  removeEmpty = true,
   colorTheme = 'default',
   chartThreshold = useChartThreshold(),
   maxLabelChars = useChartMaxLabelChars(),
+  ...params
 }: PieChartProps) => {
   const t = useChartTranslation();
   const theme = useChartTheme().pie[colorTheme];
@@ -52,14 +48,9 @@ const BentoPie = ({
 
   // ##################### Data processing #####################
 
+  const transformedData = useTransformedChartData(params, true);
   const { data, sum } = useMemo(() => {
-    let data = applyChartDataTransforms({
-      data: originalData,
-      preFilter,
-      dataMap,
-      postFilter,
-      removeEmpty,
-    });
+    let data = [...transformedData];
 
     if (sort) data.sort((a, b) => a.y - b.y);
 
@@ -67,10 +58,9 @@ const BentoPie = ({
     const sum = data.reduce((acc, e) => acc + e.y, 0);
     const length = data.length;
     const threshold = chartThreshold * sum;
-    const temp = data.filter((e) => e.y > threshold);
-
+    const dataAboveThreshold = data.filter((e) => e.y > threshold);
     // length - 1 intentional: if there is just one category below threshold, the "Other" category is not necessary.
-    data = temp.length === length - 1 ? data : temp;
+    data = dataAboveThreshold.length === length - 1 ? data : dataAboveThreshold;
     if (data.length !== length) {
       data.push({
         x: t['Other'],
@@ -82,7 +72,7 @@ const BentoPie = ({
       data: data.map((e) => ({ name: e.x, value: e.y })),
       sum,
     };
-  }, [originalData, preFilter, dataMap, postFilter, removeEmpty, sort, chartThreshold]);
+  }, [transformedData, sort, chartThreshold]);
 
   if (data.length === 0) {
     return <NoData height={height} />;
