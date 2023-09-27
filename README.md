@@ -34,7 +34,7 @@ npm install bento-charts leaflet react-leaflet
 
 ## Usage
 
-Wrap your app in the ChartConfigProvider and pass in the Language of your site.
+Wrap your app in the `ChartConfigProvider` and pass in the Language of your site.
 
 ```jsx
 import { ChartConfigProvider } from 'bento-charts';
@@ -58,8 +58,11 @@ You also can provide your own theme and translation dictionary.
     <App />
 </ChartConfigProvider>
 ```
-refer to [theme](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec68e2dd7f62f8d786148480ce5105f/src/types/chartTypes.ts#L20) and [translations](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec68e2dd7f62f8d786148480ce5105f/src/types/chartTypes.ts#L47) for more information.
+refer to [theme](https://github.com/bento-platform/Bento-Charts/blob/main/src/types/chartTypes.ts#L20) 
+and [translations](https://github.com/bento-platform/Bento-Charts/blob/main/src/types/chartTypes.ts#L47) 
+for more information.
 
+Right now, no properties from `ChartConfigProvider` are used for any map components, but they may do so in the future.
 
 
 ## Usage
@@ -69,10 +72,13 @@ refer to [theme](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec
 ```jsx
 import { BarChart, PieChart } from 'bento-charts';
 ```
-Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/eee46541eec68e2dd7f62f8d786148480ce5105f/src/types/chartTypes.ts#L51) for information on their props.
+Refer to [Props](https://github.com/bento-platform/Bento-Charts/blob/main/src/types/chartTypes.ts#L51) 
+for information on their props.
 
 
 ### Using a Map
+
+Maps can be imported using a command like the following:
 
 ```jsx
 import { ChoroplethMap } from 'bento-charts/maps';
@@ -80,6 +86,14 @@ import { ChoroplethMap } from 'bento-charts/maps';
 
 Here, note the sub-path on the import - this separation allows us to have the 
 map-related peer dependencies marked as "optional".
+
+The following map components are available:
+
+* `ChoroplethMap` for showing a choropleth map, coloured by 
+* `PointMap` (for showing a list of point coordinates; this uses a different data structure than the other components)
+
+See [map component properties](https://github.com/bento-platform/bento_charts/blob/main/src/types/mapTypes.ts) 
+for more information.
 
 
 
