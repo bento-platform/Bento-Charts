@@ -14,7 +14,6 @@ type PointMapOnClick = (point: GeoPointDataItem) => void;
 type GeoJSONShapeOnClick = (shape: GeoJSONFeatureType) => void;
 
 export interface BaseMapProps extends BaseChartComponentProps {
-  height: number;
   center: [number, number];
   zoom: number;
   tileLayer?: ReactElement;

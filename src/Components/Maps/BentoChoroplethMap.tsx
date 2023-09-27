@@ -40,7 +40,7 @@ const BentoChoroplethMap = ({
     if (dataMap) data = data.map(dataMap);
     if (postFilter) data = data.filter(postFilter);
     return data;
-  }, [originalData])
+  }, [originalData]);
 
   const dataByFeatureCat = useMemo(() => Object.fromEntries(data.map((d) => [d.x, d.y])), [data]);
 
