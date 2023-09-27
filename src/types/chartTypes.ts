@@ -1,8 +1,8 @@
-import { PieProps, BarProps } from 'recharts';
+import type { PieProps, BarProps } from 'recharts';
 
-export type ChartDataType = ChartDataItem[];
+export type CategoricalChartDataType = CategoricalChartDataItem[];
 
-export interface ChartDataItem {
+export interface CategoricalChartDataItem {
   x: string;
   y: number;
 }
@@ -36,8 +36,8 @@ export type FilterCallback<T> = (value: T, index: number, array: T[]) => boolean
 export type UnitaryMapCallback<T> = (value: T, index: number, array: T[]) => T;
 // export type BinaryMapCallback<T, U> = (value: T, index: number, array: T[]) => U;
 
-export type ChartFilterCallback = FilterCallback<ChartDataItem>;
-export type ChartDataMapCallback = UnitaryMapCallback<ChartDataItem>;
+export type ChartFilterCallback = FilterCallback<CategoricalChartDataItem>;
+export type ChartDataMapCallback = UnitaryMapCallback<CategoricalChartDataItem>;
 
 export type SupportedLng = 'en' | 'fr';
 
@@ -51,8 +51,8 @@ export type TranslationObject = {
   [key in SupportedLng]: LngDictionary;
 };
 
-export interface ChartDataWithTransforms {
-  data: ChartDataType;
+export interface CategoricalChartDataWithTransforms {
+  data: CategoricalChartDataType;
   preFilter?: ChartFilterCallback;
   dataMap?: ChartDataMapCallback;
   postFilter?: ChartFilterCallback;
@@ -60,11 +60,14 @@ export interface ChartDataWithTransforms {
 }
 
 // ###################  COMPONENT PROPS #####################
-interface BaseChartProps extends ChartDataWithTransforms {
+export interface BaseChartComponentProps {
   height: number;
 }
 
-export interface PieChartProps extends BaseChartProps {
+export interface BaseCategoricalChartProps extends BaseChartComponentProps, CategoricalChartDataWithTransforms {
+}
+
+export interface PieChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['pie'];
   sort?: boolean;
   onClick?: PieProps['onClick'];
@@ -72,7 +75,7 @@ export interface PieChartProps extends BaseChartProps {
   maxLabelChars?: number;
 }
 
-export interface BarChartProps extends BaseChartProps {
+export interface BarChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['bar'];
   title?: string;
   units: string;

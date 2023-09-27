@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { RADIAN } from '../constants/chartConstants';
-import type { ChartDataWithTransforms } from '../types/chartTypes';
+import type { CategoricalChartDataWithTransforms } from '../types/chartTypes';
 
 export const polarToCartesian = (cx: number, cy: number, radius: number, angle: number) => {
   return {
@@ -10,7 +10,7 @@ export const polarToCartesian = (cx: number, cy: number, radius: number, angle: 
 };
 
 export const useTransformedChartData = (
-  { data: originalData, preFilter, dataMap, postFilter, removeEmpty: origRemoveEmpty }: ChartDataWithTransforms,
+  { data: originalData, preFilter, dataMap, postFilter, removeEmpty: origRemoveEmpty }: CategoricalChartDataWithTransforms,
   defaultRemoveEmpty = true
 ) =>
   useMemo(() => {
