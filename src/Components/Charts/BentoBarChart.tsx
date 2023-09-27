@@ -13,7 +13,7 @@ import {
   TICK_MARGIN,
 } from '../../constants/chartConstants';
 
-import type { BarChartProps, ChartDataItem, TooltipPayload } from '../../types/chartTypes';
+import type { BarChartProps, CategoricalChartDataItem, TooltipPayload } from '../../types/chartTypes';
 import { useChartTheme, useChartTranslation } from '../../ChartConfigProvider';
 import NoData from '../NoData';
 
@@ -39,7 +39,7 @@ const BentoBarChart = ({
   const t = useChartTranslation();
   const { fill: chartFill, missing } = useChartTheme().bar[colorTheme];
 
-  const fill = (entry: ChartDataItem) => (entry.x === 'missing' ? missing : chartFill);
+  const fill = (entry: CategoricalChartDataItem) => (entry.x === 'missing' ? missing : chartFill);
 
   data = [...data];
   if (preFilter) data = data.filter(preFilter);

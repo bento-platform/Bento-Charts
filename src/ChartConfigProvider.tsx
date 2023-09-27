@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
-import { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
+import type { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
 
 type ChartContextType = {
   theme: ChartTheme;
@@ -35,7 +35,14 @@ export function useChartMaxLabelChars() {
   return useContext(ChartContext).maxLabelChars;
 }
 
-const ChartConfigProvider = ({ theme, Lng, translationMap, children, globalThreshold, maxLabelChars }: ChartConfigProviderProps) => {
+const ChartConfigProvider = ({
+  theme,
+  Lng,
+  translationMap,
+  children,
+  globalThreshold,
+  maxLabelChars,
+}: ChartConfigProviderProps) => {
   let lang: SupportedLng = 'en';
   try {
     lang = Lng as SupportedLng;

@@ -19,8 +19,8 @@ import {
   useChartTheme,
   useChartTranslation,
   useChartThreshold,
-  useChartMaxLabelChars
-} from "../../ChartConfigProvider";
+  useChartMaxLabelChars,
+} from '../../ChartConfigProvider';
 import { polarToCartesian } from '../../util/chartUtils';
 import NoData from '../NoData';
 
@@ -144,64 +144,66 @@ const toNumber = (val: number | string | undefined, defaultValue?: number): numb
   return defaultValue || 0;
 };
 
-const RenderLabel = (maxLabelChars: number): PieProps['label'] => (params: PieLabelRenderProps ) => { // eslint-disable-line
-  const { fill, payload, index, activeIndex } = params;
-  const percent = params.percent || 0;
-  const midAngle = params.midAngle || 0;
+const RenderLabel =
+  (maxLabelChars: number): PieProps['label'] =>
+  (params: PieLabelRenderProps) => {  // eslint-disable-line
+    const { fill, payload, index, activeIndex } = params;
+    const percent = params.percent || 0;
+    const midAngle = params.midAngle || 0;
 
-  // skip rendering this static label if the sector is selected.
-  // this will let the 'renderActiveState' draw without overlapping.
-  // also, skip rendering if segment is too small a percentage (avoids label clutter)
-  if (index === activeIndex || percent < LABEL_THRESHOLD) {
-    return;
-  }
+    // skip rendering this static label if the sector is selected.
+    // this will let the 'renderActiveState' draw without overlapping.
+    // also, skip rendering if segment is too small a percentage (avoids label clutter)
+    if (index === activeIndex || percent < LABEL_THRESHOLD) {
+      return;
+    }
 
-  const outerRadius = toNumber(params.outerRadius);
-  const cx = toNumber(params.cx);
-  const cy = toNumber(params.cy);
+    const outerRadius = toNumber(params.outerRadius);
+    const cx = toNumber(params.cx);
+    const cy = toNumber(params.cy);
 
-  const name = payload.name === 'null' ? '(Empty)' : payload.name;
+    const name = payload.name === 'null' ? '(Empty)' : payload.name;
 
-  const sin = Math.sin(-RADIAN * midAngle);
-  const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 20) * cos;
-  const my = cy + (outerRadius + 20) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
-  const ey = my;
-  const textAnchor = cos >= 0 ? 'start' : 'end';
+    const sin = Math.sin(-RADIAN * midAngle);
+    const cos = Math.cos(-RADIAN * midAngle);
+    const sx = cx + (outerRadius + 10) * cos;
+    const sy = cy + (outerRadius + 10) * sin;
+    const mx = cx + (outerRadius + 20) * cos;
+    const my = cy + (outerRadius + 20) * sin;
+    const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+    const ey = my;
+    const textAnchor = cos >= 0 ? 'start' : 'end';
 
-  const currentTextStyle: CSS.Properties = {
-    ...TEXT_STYLE,
-    fontWeight: payload.selected ? 'bold' : 'normal',
-    fontStyle: payload.name === 'null' ? 'italic' : 'normal',
+    const currentTextStyle: CSS.Properties = {
+      ...TEXT_STYLE,
+      fontWeight: payload.selected ? 'bold' : 'normal',
+      fontStyle: payload.name === 'null' ? 'italic' : 'normal',
+    };
+
+    const offsetRadius = 20;
+    const startPoint = polarToCartesian(cx, cy, outerRadius, midAngle);
+    const endPoint = polarToCartesian(cx, cy, outerRadius + offsetRadius, midAngle);
+    const lineProps = {
+      ...params,
+      fill: 'none',
+      stroke: fill,
+      points: [startPoint, endPoint],
+    };
+
+    return (
+      <g>
+        <Curve {...lineProps} type="linear" className="recharts-pie-label-line" />
+        <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+        <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 3} textAnchor={textAnchor} style={currentTextStyle}>
+          {labelShortName(name, maxLabelChars)}
+        </text>
+        <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={14} textAnchor={textAnchor} style={COUNT_TEXT_STYLE}>
+          {`(${payload.value})`}
+        </text>
+      </g>
+    );
   };
-
-  const offsetRadius = 20;
-  const startPoint = polarToCartesian(cx, cy, outerRadius, midAngle);
-  const endPoint = polarToCartesian(cx, cy, outerRadius + offsetRadius, midAngle);
-  const lineProps = {
-    ...params,
-    fill: 'none',
-    stroke: fill,
-    points: [startPoint, endPoint],
-  };
-
-  return (
-    <g>
-      <Curve {...lineProps} type="linear" className="recharts-pie-label-line" />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 3} textAnchor={textAnchor} style={currentTextStyle}>
-        {labelShortName(name, maxLabelChars)}
-      </text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={14} textAnchor={textAnchor} style={COUNT_TEXT_STYLE}>
-        {`(${payload.value})`}
-      </text>
-    </g>
-  );
-};
 
 const RenderActiveLabel: PieProps['activeShape'] = (params) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = params;
