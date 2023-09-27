@@ -7,8 +7,9 @@ import 'antd/dist/reset.css';
 import 'leaflet/dist/leaflet.css';
 import '../../src/styles.css';
 
-import { TEST_HEATMAP_GEOJSON_FEATURES } from './testData';
+import { ChartConfigProvider } from '../../src';
 import { ChoroplethMap, PointMap } from '../../src/maps';
+import { TEST_HEATMAP_GEOJSON_FEATURES } from './testData';
 
 const items: TabsProps['items'] = [
   {
@@ -56,14 +57,16 @@ const items: TabsProps['items'] = [
 
 const BentoChartsTestApp = () => {
   return (
-    <Layout>
-      <Layout.Content style={{ padding: 24, height: "100vh" }}>
-        <Card>
-          <Typography.Title level={1}>Bento Charts Test App</Typography.Title>
-          <Tabs items={items} />
-        </Card>
-      </Layout.Content>
-    </Layout>
+    <ChartConfigProvider Lng="en">
+      <Layout>
+        <Layout.Content style={{ padding: 24, height: "100vh" }}>
+          <Card>
+            <Typography.Title level={1}>Bento Charts Test App</Typography.Title>
+            <Tabs items={items} />
+          </Card>
+        </Layout.Content>
+      </Layout>
+    </ChartConfigProvider>
   );
 };
 
