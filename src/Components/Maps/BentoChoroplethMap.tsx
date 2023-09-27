@@ -21,16 +21,27 @@ const POS_BOTTOM_RIGHT: ControlPosition = 'bottomright';
 
 const BentoChoroplethMap = ({
   height,
+  data: originalData,
+  preFilter,
+  dataMap,
+  postFilter,
   center,
   zoom,
   tileLayer,
-  data,
   colorMode,
   features,
   categoryProp,
   onClick,
   renderPopupBody,
 }: ChoroplethMapProps) => {
+  const data = useMemo(() => {
+    let data = [...originalData];
+    if (preFilter) data = data.filter(preFilter);
+    if (dataMap) data = data.map(dataMap);
+    if (postFilter) data = data.filter(postFilter);
+    return data;
+  }, [originalData])
+
   const dataByFeatureCat = useMemo(() => Object.fromEntries(data.map((d) => [d.x, d.y])), [data]);
 
   const minYVal = useMemo(() => Math.min(...data.map((d) => d.y)), [data]);
