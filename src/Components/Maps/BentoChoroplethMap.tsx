@@ -15,16 +15,13 @@ import type { ChoroplethMapProps } from '../../types/mapTypes';
 import BentoMapContainer from './BentoMapContainer';
 import MapLegendContinuous from './controls/MapLegendContinuous';
 import MapLegendDiscrete from './controls/MapLegendDiscrete';
+import { useTransformedChartData } from '../../util/chartUtils';
 
 const DEFAULT_CATEGORY = '';
 const POS_BOTTOM_RIGHT: ControlPosition = 'bottomright';
 
 const BentoChoroplethMap = ({
   height,
-  data: originalData,
-  preFilter,
-  dataMap,
-  postFilter,
   center,
   zoom,
   tileLayer,
@@ -33,14 +30,9 @@ const BentoChoroplethMap = ({
   categoryProp,
   onClick,
   renderPopupBody,
+  ...params
 }: ChoroplethMapProps) => {
-  const data = useMemo(() => {
-    let data = [...originalData];
-    if (preFilter) data = data.filter(preFilter);
-    if (dataMap) data = data.map(dataMap);
-    if (postFilter) data = data.filter(postFilter);
-    return data;
-  }, [originalData]);
+  const data = useTransformedChartData(params);
 
   const dataByFeatureCat = useMemo(() => Object.fromEntries(data.map((d) => [d.x, d.y])), [data]);
 
