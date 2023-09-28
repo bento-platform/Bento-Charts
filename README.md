@@ -81,7 +81,7 @@ for information on their props.
 Maps can be imported using a command like the following:
 
 ```jsx
-import { ChoroplethMap } from 'bento-charts/maps';
+import { ChoroplethMap } from 'bento-charts/dist/maps';
 ```
 
 Here, note the sub-path on the import - this separation allows us to have the 
