@@ -87,8 +87,9 @@ const BentoChoroplethMap = ({
                 {onClick ? (
                   <a
                     href="#"
-                    onClick={() => {
+                    onClick={(e) => {
                       if (onClick) onClick(feature);
+                      e.preventDefault();
                     }}
                   >
                     {title}
