@@ -17,7 +17,7 @@ const BentoPointMap = ({ height, center, zoom, tileLayer, data, onClick, renderP
             <Popup>
               <h4 style={{ marginBottom: renderPopupBody ? 6 : 0 }}>
                 {onClick ? <a href="#" onClick={(e) => {
-                  onClick(point)
+                  onClick(point);
                   e.preventDefault();
                 }}>{title}</a> : <>{title}</>}
               </h4>
