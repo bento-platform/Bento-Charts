@@ -50,6 +50,7 @@ const config = {
   devtool: 'source-map',
   devServer: {
     static: './test/dist',
+    historyApiFallback: true,
   },
   resolve: {
     alias: {

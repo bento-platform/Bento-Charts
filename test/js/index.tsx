@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Routes, Route, Navigate, BrowserRouter, useParams, useNavigate } from 'react-router-dom';
 
 import { Card, Layout, Tabs, TabsProps, Typography } from 'antd';
 
@@ -43,19 +44,33 @@ const items: TabsProps['items'] = [
       <TestPointMap />
     ),
   }
-]
+];
+
+const RoutedApp = () => {
+  const navigate = useNavigate();
+  const { tab } = useParams();
+
+  return (
+    <Layout>
+      <Layout.Content style={{ padding: 24, height: "100vh" }}>
+        <Card>
+          <Typography.Title level={1}>Bento Charts Test App</Typography.Title>
+          <Tabs items={items} activeKey={tab} onChange={(key) => navigate(`/${key}`)} />
+        </Card>
+      </Layout.Content>
+    </Layout>
+  );
+}
 
 const BentoChartsTestApp = () => {
   return (
     <ChartConfigProvider Lng="en">
-      <Layout>
-        <Layout.Content style={{ padding: 24, height: "100vh" }}>
-          <Card>
-            <Typography.Title level={1}>Bento Charts Test App</Typography.Title>
-            <Tabs items={items} />
-          </Card>
-        </Layout.Content>
-      </Layout>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/:tab" element={<RoutedApp />} />
+          <Route path="*" element={<Navigate to={`/${items[0].key}`} />} />
+        </Routes>
+      </BrowserRouter>
     </ChartConfigProvider>
   );
 };
