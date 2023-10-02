@@ -54,7 +54,7 @@ const BentoPie = ({
 
     if (sort) data.sort((a, b) => a.y - b.y);
 
-    // combining sections with less than OTHER_THRESHOLD
+    // combining sections with less than chartThreshold
     const sum = data.reduce((acc, e) => acc + e.y, 0);
     const length = data.length;
     const threshold = chartThreshold * sum;
