@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 
-import { BaseCategoricalChartProps, BaseChartComponentProps, CategoricalChartDataType } from './chartTypes';
+import { BaseCategoricalChartProps, BaseChartComponentProps } from './chartTypes';
 import type { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
 export interface GeoPointDataItem {

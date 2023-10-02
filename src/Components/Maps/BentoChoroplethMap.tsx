@@ -94,7 +94,7 @@ const BentoChoroplethMap = ({
             </div>
           );
         },
-      } as LeafletEventHandlerFnMap),
+      }) as LeafletEventHandlerFnMap,
     [onClick, categoryProp, renderPopupBody]
   );
 

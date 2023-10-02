@@ -10,7 +10,13 @@ export const polarToCartesian = (cx: number, cy: number, radius: number, angle: 
 };
 
 export const useTransformedChartData = (
-  { data: originalData, preFilter, dataMap, postFilter, removeEmpty: origRemoveEmpty }: CategoricalChartDataWithTransforms,
+  {
+    data: originalData,
+    preFilter,
+    dataMap,
+    postFilter,
+    removeEmpty: origRemoveEmpty,
+  }: CategoricalChartDataWithTransforms,
   defaultRemoveEmpty = true
 ) =>
   useMemo(() => {

@@ -64,8 +64,7 @@ export interface BaseChartComponentProps {
   height: number;
 }
 
-export interface BaseCategoricalChartProps extends BaseChartComponentProps, CategoricalChartDataWithTransforms {
-}
+export interface BaseCategoricalChartProps extends BaseChartComponentProps, CategoricalChartDataWithTransforms {}
 
 export interface PieChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['pie'];
