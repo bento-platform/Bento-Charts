@@ -8,49 +8,22 @@ import 'leaflet/dist/leaflet.css';
 import '../../src/styles.css';
 
 import { ChartConfigProvider } from '../../src';
-import { ChoroplethMap, PointMap } from '../../src/maps';
-import { TEST_HEATMAP_GEOJSON_FEATURES } from './testData';
+import TestChoroplethMap from './TestChoroplethMap';
+import TestPointMap from './TestPointMap';
 
 const items: TabsProps['items'] = [
   {
     key: 'choropleth',
     label: 'Map: Choropleth',
     children: (
-      <ChoroplethMap
-        features={TEST_HEATMAP_GEOJSON_FEATURES}
-        categoryProp="pop"
-        data={[{x: "AB", y: 50}, {x: "NB", y: 75}, {x: "SB", y: 60}]}
-        colorMode={{
-          mode: "continuous",
-          minColor: "rgba(122, 122, 255, 0.2)",
-          maxColor: "rgba(255, 122, 122, 0.5)",
-        }}
-        onClick={(f) => {
-          console.log(f);
-          alert(JSON.stringify(f, null, 2));
-        }}
-        height={600}
-        center={[74.0694163, -112.7217838]}
-        zoom={2.75}
-        renderPopupBody={(_f, d) => <>{d} samples</>}
-      />
+      <TestChoroplethMap />
     ),
   },
   {
     key: 'points',
     label: 'Map: Points',
     children: (
-      <PointMap
-        data={TEST_HEATMAP_GEOJSON_FEATURES.features[1].geometry.coordinates[0].map((c, i) => {
-          return {
-            title: `point ${i}`,
-            coordinates: c as [number, number],
-          };
-        })}
-        height={600}
-        center={[74.0694163, -112.7217838]}
-        zoom={2.75}
-      />
+      <TestPointMap />
     ),
   }
 ]
