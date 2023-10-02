@@ -32,6 +32,9 @@ const labelShortName = (name: string, maxChars: number) => {
   return `${name.substring(0, maxChars - 3)}\u2026`;
 };
 
+const OUTER_RADIUS_REDUCTION_FACTOR = 3.75; // originally from 300 / 80
+const INNER_RADIUS_REDUCTION_FACTOR = 8.5; // roughly originally from 300 / 35
+
 const BentoPie = ({
   height,
   onClick,
@@ -96,39 +99,37 @@ const BentoPie = ({
   }, []);
 
   return (
-    <>
-      <div style={CHART_WRAPPER_STYLE}>
-        <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
-          <Pie
-            data={data}
-            dataKey="value"
-            cx="50%"
-            cy="50%"
-            innerRadius={35}
-            outerRadius={80}
-            label={renderLabel(maxLabelChars)}
-            labelLine={false}
-            isAnimationActive={false}
-            onMouseEnter={onEnter}
-            onMouseLeave={onLeave}
-            onMouseOver={onHover}
-            activeIndex={activeIndex}
-            activeShape={RenderActiveLabel}
-            onClick={onClick}
-          >
-            {data.map((entry, index) => {
-              const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
-              return <Cell key={index} fill={fill} />;
-            })}
-          </Pie>
-          <Tooltip
-            content={<CustomTooltip totalCount={sum} />}
-            isAnimationActive={false}
-            allowEscapeViewBox={{ x: true, y: true }}
-          />
-        </PieChart>
-      </div>
-    </>
+    <div style={CHART_WRAPPER_STYLE}>
+      <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
+        <Pie
+          data={data}
+          dataKey="value"
+          cx="50%"
+          cy="50%"
+          innerRadius={height / INNER_RADIUS_REDUCTION_FACTOR}
+          outerRadius={height / OUTER_RADIUS_REDUCTION_FACTOR}
+          label={renderLabel(maxLabelChars)}
+          labelLine={false}
+          isAnimationActive={false}
+          onMouseEnter={onEnter}
+          onMouseLeave={onLeave}
+          onMouseOver={onHover}
+          activeIndex={activeIndex}
+          activeShape={RenderActiveLabel}
+          onClick={onClick}
+        >
+          {data.map((entry, index) => {
+            const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
+            return <Cell key={index} fill={fill} />;
+          })}
+        </Pie>
+        <Tooltip
+          content={<CustomTooltip totalCount={sum} />}
+          isAnimationActive={false}
+          allowEscapeViewBox={{ x: true, y: true }}
+        />
+      </PieChart>
+    </div>
   );
 };
 
