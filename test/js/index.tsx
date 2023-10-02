@@ -8,10 +8,27 @@ import 'leaflet/dist/leaflet.css';
 import '../../src/styles.css';
 
 import { ChartConfigProvider } from '../../src';
+
+import TestBarChart from './TestBarChart';
 import TestChoroplethMap from './TestChoroplethMap';
+import TestPieChart from './TestPieChart';
 import TestPointMap from './TestPointMap';
 
 const items: TabsProps['items'] = [
+  {
+    key: 'bar',
+    label: 'Chart: Bar',
+    children: (
+      <TestBarChart />
+    ),
+  },
+  {
+    key: 'pie',
+    label: 'Chart: Pie',
+    children: (
+      <TestPieChart />
+    ),
+  },
   {
     key: 'choropleth',
     label: 'Map: Choropleth',
