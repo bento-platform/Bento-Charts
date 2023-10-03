@@ -62,6 +62,9 @@ export interface CategoricalChartDataWithTransforms {
 // ###################  COMPONENT PROPS #####################
 export interface BaseChartComponentProps {
   height: number;
+  // Width is useful to have, to force re-render, but it is optional.
+  // Otherwise, it will be auto-computed based on container size on initial render.
+  width?: number;
 }
 
 export interface BaseCategoricalChartProps extends BaseChartComponentProps, CategoricalChartDataWithTransforms {}

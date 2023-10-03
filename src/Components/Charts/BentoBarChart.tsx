@@ -1,13 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label, BarProps } from 'recharts';
 import {
   TOOL_TIP_STYLE,
   COUNT_STYLE,
   LABEL_STYLE,
-  CHART_WRAPPER_STYLE,
   MAX_TICK_LABEL_CHARS,
   TITLE_STYLE,
-  ASPECT_RATIO,
+  BAR_DEFAULT_ASPECT_RATIO,
   TICKS_SHOW_ALL_LABELS_BELOW,
   UNITS_LABEL_OFFSET,
   TICK_MARGIN,
@@ -17,6 +16,7 @@ import type { BarChartProps, CategoricalChartDataItem, TooltipPayload } from '..
 import { useChartTheme, useChartTranslation } from '../../ChartConfigProvider';
 import NoData from '../NoData';
 import { useTransformedChartData } from '../../util/chartUtils';
+import ChartWrapper from './ChartWrapper';
 
 const tickFormatter = (tickLabel: string) => {
   if (tickLabel.length <= MAX_TICK_LABEL_CHARS) {
@@ -25,7 +25,9 @@ const tickFormatter = (tickLabel: string) => {
   return `${tickLabel.substring(0, MAX_TICK_LABEL_CHARS)}...`;
 };
 
-const BentoBarChart = ({ height, units, title, onClick, colorTheme = 'default', ...params }: BarChartProps) => {
+const BAR_CHART_MARGINS = { top: 10, bottom: 100, right: 20 };
+
+const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'default', ...params }: BarChartProps) => {
   const t = useChartTranslation();
   const { fill: chartFill, missing } = useChartTheme().bar[colorTheme];
 
@@ -43,6 +45,16 @@ const BentoBarChart = ({ height, units, title, onClick, colorTheme = 'default', 
     [onClick]
   );
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [chartWidth, setChartWidth] = useState(width ?? height * BAR_DEFAULT_ASPECT_RATIO);
+
+  useEffect(() => {
+    const c = wrapperRef.current;
+    if (c) {
+      setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * BAR_DEFAULT_ASPECT_RATIO)));
+    }
+  }, [wrapperRef, width]);
+
   if (data.length === 0) {
     return <NoData height={height} />;
   }
@@ -53,9 +65,9 @@ const BentoBarChart = ({ height, units, title, onClick, colorTheme = 'default', 
   //  on formatting a non-string. This hack manually overrides the ticks for the axis and blanks it out.
   //    - David L, 2023-01-03
   return (
-    <div style={CHART_WRAPPER_STYLE}>
+    <ChartWrapper ref={wrapperRef}>
       <div style={TITLE_STYLE}>{title}</div>
-      <BarChart width={height * ASPECT_RATIO} height={height} data={data} margin={{ top: 10, bottom: 100, right: 20 }}>
+      <BarChart width={chartWidth} height={height} data={data} margin={BAR_CHART_MARGINS}>
         <XAxis
           dataKey="x"
           height={20}
@@ -78,7 +90,7 @@ const BentoBarChart = ({ height, units, title, onClick, colorTheme = 'default', 
           ))}
         </Bar>
       </BarChart>
-    </div>
+    </ChartWrapper>
   );
 };
 

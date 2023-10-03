@@ -10,6 +10,7 @@ const TestBarChart = () => (
       alert(JSON.stringify(f, null, 2));
     }}
     height={600}
+    width={960}
   />
 );
 

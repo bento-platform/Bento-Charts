@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps, PieLabelRenderProps } from 'recharts';
 import type CSS from 'csstype';
 
@@ -7,12 +7,11 @@ import {
   LABEL_STYLE,
   COUNT_STYLE,
   CHART_MISSING_FILL,
-  CHART_WRAPPER_STYLE,
   RADIAN,
-  CHART_ASPECT_RATIO,
+  PIE_DEFAULT_ASPECT_RATIO,
   LABEL_THRESHOLD,
   COUNT_TEXT_STYLE,
-  TEXT_STYLE,
+  TEXT_STYLE, BAR_DEFAULT_ASPECT_RATIO,
 } from '../../constants/chartConstants';
 import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
 import {
@@ -23,6 +22,7 @@ import {
 } from '../../ChartConfigProvider';
 import { polarToCartesian, useTransformedChartData } from '../../util/chartUtils';
 import NoData from '../NoData';
+import ChartWrapper from './ChartWrapper';
 
 const labelShortName = (name: string, maxChars: number) => {
   if (name.length <= maxChars) {
@@ -37,6 +37,7 @@ const INNER_RADIUS_REDUCTION_FACTOR = 8.5; // roughly originally from 300 / 35
 
 const BentoPie = ({
   height,
+  width,
   onClick,
   sort = true,
   colorTheme = 'default',
@@ -98,16 +99,28 @@ const BentoPie = ({
     setActiveIndex(undefined);
   }, []);
 
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const [chartWidth, setChartWidth] = useState(width ?? height * PIE_DEFAULT_ASPECT_RATIO);
+
+  const minDim = useMemo(() => Math.min(height, chartWidth), [height, chartWidth]);
+
+  useEffect(() => {
+    const c = wrapperRef.current;
+    if (c) {
+      setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * PIE_DEFAULT_ASPECT_RATIO)));
+    }
+  }, [wrapperRef, width]);
+
   return (
-    <div style={CHART_WRAPPER_STYLE}>
-      <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
+    <ChartWrapper ref={wrapperRef}>
+      <PieChart height={height} width={chartWidth}>
         <Pie
           data={data}
           dataKey="value"
           cx="50%"
           cy="50%"
-          innerRadius={height / INNER_RADIUS_REDUCTION_FACTOR}
-          outerRadius={height / OUTER_RADIUS_REDUCTION_FACTOR}
+          innerRadius={minDim / INNER_RADIUS_REDUCTION_FACTOR}
+          outerRadius={minDim / OUTER_RADIUS_REDUCTION_FACTOR}
           label={renderLabel(maxLabelChars)}
           labelLine={false}
           isAnimationActive={false}
@@ -129,7 +142,7 @@ const BentoPie = ({
           allowEscapeViewBox={{ x: true, y: true }}
         />
       </PieChart>
-    </div>
+    </ChartWrapper>
   );
 };
 
