@@ -12,7 +12,14 @@ const config = {
   },
   module: {
     rules: [
-      { test: /\.[tj](sx|s)?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
+      {
+        test: /\.[tj](sx|s)?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: 'test/tsconfig.json'
+        }
+      },
       {
         test: /\.html$/i,
         loader: 'html-loader',
@@ -43,6 +50,7 @@ const config = {
   devtool: 'source-map',
   devServer: {
     static: './test/dist',
+    historyApiFallback: true,
   },
   resolve: {
     alias: {

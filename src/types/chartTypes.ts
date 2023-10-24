@@ -37,6 +37,7 @@ export type UnitaryMapCallback<T> = (value: T, index: number, array: T[]) => T;
 // export type BinaryMapCallback<T, U> = (value: T, index: number, array: T[]) => U;
 
 export type ChartFilterCallback = FilterCallback<CategoricalChartDataItem>;
+export type ChartDataMapCallback = UnitaryMapCallback<CategoricalChartDataItem>;
 
 export type SupportedLng = 'en' | 'fr';
 
@@ -50,18 +51,20 @@ export type TranslationObject = {
   [key in SupportedLng]: LngDictionary;
 };
 
+export interface CategoricalChartDataWithTransforms {
+  data: CategoricalChartDataType;
+  preFilter?: ChartFilterCallback;
+  dataMap?: ChartDataMapCallback;
+  postFilter?: ChartFilterCallback;
+  removeEmpty?: boolean;
+}
+
 // ###################  COMPONENT PROPS #####################
 export interface BaseChartComponentProps {
   height: number;
-  preFilter?: ChartFilterCallback;
-  dataMap?: UnitaryMapCallback<CategoricalChartDataItem>;
-  postFilter?: ChartFilterCallback;
 }
 
-interface BaseCategoricalChartProps extends BaseChartComponentProps {
-  data: CategoricalChartDataType;
-  removeEmpty?: boolean;
-}
+export interface BaseCategoricalChartProps extends BaseChartComponentProps, CategoricalChartDataWithTransforms {}
 
 export interface PieChartProps extends BaseCategoricalChartProps {
   colorTheme?: keyof ChartTheme['pie'];

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label, BarProps } from 'recharts';
 import {
   TOOL_TIP_STYLE,
@@ -16,6 +16,7 @@ import {
 import type { BarChartProps, CategoricalChartDataItem, TooltipPayload } from '../../types/chartTypes';
 import { useChartTheme, useChartTranslation } from '../../ChartConfigProvider';
 import NoData from '../NoData';
+import { useTransformedChartData } from '../../util/chartUtils';
 
 const tickFormatter = (tickLabel: string) => {
   if (tickLabel.length <= MAX_TICK_LABEL_CHARS) {
@@ -24,38 +25,27 @@ const tickFormatter = (tickLabel: string) => {
   return `${tickLabel.substring(0, MAX_TICK_LABEL_CHARS)}...`;
 };
 
-const BentoBarChart = ({
-  data,
-  height,
-  units,
-  title,
-  preFilter,
-  dataMap,
-  postFilter,
-  onClick,
-  removeEmpty = true,
-  colorTheme = 'default',
-}: BarChartProps) => {
+const BentoBarChart = ({ height, units, title, onClick, colorTheme = 'default', ...params }: BarChartProps) => {
   const t = useChartTranslation();
   const { fill: chartFill, missing } = useChartTheme().bar[colorTheme];
 
   const fill = (entry: CategoricalChartDataItem) => (entry.x === 'missing' ? missing : chartFill);
 
-  data = [...data];
-  if (preFilter) data = data.filter(preFilter);
-  if (dataMap) data = data.map(dataMap);
-  if (postFilter) data = data.filter(postFilter);
-
-  if (removeEmpty) data = data.filter((d) => d.y !== 0);
-
-  if (data.length === 0) return <NoData height={height} />;
+  const data = useTransformedChartData(params, true);
 
   const totalCount = data.reduce((sum, e) => sum + e.y, 0);
 
-  const onHover: BarProps['onMouseEnter'] = (_data, _index, e) => {
-    const { target } = e;
-    if (onClick && target) (target as SVGElement).style.cursor = 'pointer';
-  };
+  const onHover: BarProps['onMouseEnter'] = useCallback(
+    (_data, _index, e) => {
+      const { target } = e;
+      if (onClick && target) (target as SVGElement).style.cursor = 'pointer';
+    },
+    [onClick]
+  );
+
+  if (data.length === 0) {
+    return <NoData height={height} />;
+  }
 
   // Regarding XAxis.ticks below:
   //  The weird conditional is added from https://github.com/recharts/recharts/issues/2593#issuecomment-1311678397

@@ -1,7 +1,7 @@
 import { ReactElement, ReactNode } from 'react';
 import type { Feature as GeoJSONFeatureType } from 'geojson';
 
-import { BaseChartComponentProps, CategoricalChartDataType } from './chartTypes';
+import { BaseCategoricalChartProps, BaseChartComponentProps } from './chartTypes';
 import type { GeoJSONPolygonOnlyFeatureCollection } from './geoJSONTypes';
 
 export interface GeoPointDataItem {
@@ -42,8 +42,8 @@ export interface ChoroplethMapColorModeDiscrete {
   legendItems: MapDiscreteLegendItem[];
 }
 
-export interface ChoroplethMapProps extends BaseMapProps {
-  data: CategoricalChartDataType; // heatmaps are 'categorical' + geographical
+// heatmaps are 'categorical' + geographical:
+export interface ChoroplethMapProps extends BaseCategoricalChartProps, BaseMapProps {
   features: GeoJSONPolygonOnlyFeatureCollection;
   colorMode: ChoroplethMapColorModeContinuous | ChoroplethMapColorModeDiscrete;
   categoryProp: string;

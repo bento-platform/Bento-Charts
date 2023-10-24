@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps, PieLabelRenderProps } from 'recharts';
 import type CSS from 'csstype';
 
@@ -21,7 +21,7 @@ import {
   useChartThreshold,
   useChartMaxLabelChars,
 } from '../../ChartConfigProvider';
-import { polarToCartesian } from '../../util/chartUtils';
+import { polarToCartesian, useTransformedChartData } from '../../util/chartUtils';
 import NoData from '../NoData';
 
 const labelShortName = (name: string, maxChars: number) => {
@@ -32,18 +32,17 @@ const labelShortName = (name: string, maxChars: number) => {
   return `${name.substring(0, maxChars - 3)}\u2026`;
 };
 
+const OUTER_RADIUS_REDUCTION_FACTOR = 3.75; // originally from 300 / 80
+const INNER_RADIUS_REDUCTION_FACTOR = 8.5; // roughly originally from 300 / 35
+
 const BentoPie = ({
-  data,
   height,
-  preFilter,
-  dataMap,
-  postFilter,
   onClick,
   sort = true,
-  removeEmpty = true,
   colorTheme = 'default',
   chartThreshold = useChartThreshold(),
   maxLabelChars = useChartMaxLabelChars(),
+  ...params
 }: PieChartProps) => {
   const t = useChartTranslation();
   const theme = useChartTheme().pie[colorTheme];
@@ -52,86 +51,83 @@ const BentoPie = ({
 
   // ##################### Data processing #####################
 
-  data = [...data]; // Changing immutable data to mutable data
-  if (preFilter) data = data.filter(preFilter);
-  if (dataMap) data = data.map(dataMap);
-  if (postFilter) data = data.filter(postFilter);
+  const transformedData = useTransformedChartData(params, true, sort);
+  const { data, sum } = useMemo(() => {
+    let data = [...transformedData];
 
-  // removing empty values
-  if (removeEmpty) data = data.filter((e) => e.y !== 0);
+    // combining sections with less than chartThreshold
+    const sum = data.reduce((acc, e) => acc + e.y, 0);
+    const length = data.length;
+    const threshold = chartThreshold * sum;
+    const dataAboveThreshold = data.filter((e) => e.y > threshold);
+    // length - 1 intentional: if there is just one category below threshold, the "Other" category is not necessary.
+    data = dataAboveThreshold.length === length - 1 ? data : dataAboveThreshold;
+    if (data.length !== length) {
+      data.push({
+        x: t['Other'],
+        y: sum - data.reduce((acc, e) => acc + e.y, 0),
+      });
+    }
 
-  if (sort) data.sort((a, b) => a.y - b.y);
-
-  // combining sections with less than OTHER_THRESHOLD
-  const sum = data.reduce((acc, e) => acc + e.y, 0);
-  const length = data.length;
-  const threshold = chartThreshold * sum;
-  const temp = data.filter((e) => e.y > threshold);
-
-  // length - 1 intentional: if there is just one category bellow threshold the "Other" category is not necessary
-  data = temp.length === length - 1 ? data : temp;
-  if (data.length !== length) {
-    data.push({
-      x: t['Other'],
-      y: sum - data.reduce((acc, e) => acc + e.y, 0),
-    });
-  }
+    return {
+      data: data.map((e) => ({ name: e.x, value: e.y })),
+      sum,
+    };
+  }, [transformedData, sort, chartThreshold]);
 
   if (data.length === 0) {
     return <NoData height={height} />;
   }
 
-  const bentoFormatData = data.map((e) => ({ name: e.x, value: e.y }));
-
   // ##################### Rendering #####################
-  const onEnter: PieProps['onMouseEnter'] = (_data, index) => {
+  const onEnter: PieProps['onMouseEnter'] = useCallback((_data, index) => {
     setActiveIndex(index);
-  };
+  }, []);
 
-  const onHover: PieProps['onMouseOver'] = (data, _index, e) => {
-    const { target } = e;
-    if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
-  };
+  const onHover: PieProps['onMouseOver'] = useCallback(
+    (data, _index, e) => {
+      const { target } = e;
+      if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
+    },
+    [onClick]
+  );
 
-  const onLeave: PieProps['onMouseLeave'] = () => {
+  const onLeave: PieProps['onMouseLeave'] = useCallback(() => {
     setActiveIndex(undefined);
-  };
+  }, []);
 
   return (
-    <>
-      <div style={CHART_WRAPPER_STYLE}>
-        <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
-          <Pie
-            data={bentoFormatData}
-            dataKey="value"
-            cx="50%"
-            cy="50%"
-            innerRadius={35}
-            outerRadius={80}
-            label={RenderLabel(maxLabelChars)}
-            labelLine={false}
-            isAnimationActive={false}
-            onMouseEnter={onEnter}
-            onMouseLeave={onLeave}
-            onMouseOver={onHover}
-            activeIndex={activeIndex}
-            activeShape={RenderActiveLabel}
-            onClick={onClick}
-          >
-            {data.map((entry, index) => {
-              let fill = theme[index % theme.length];
-              fill = entry.x.toLowerCase() === 'missing' ? CHART_MISSING_FILL : fill;
-              return <Cell key={index} fill={fill} />;
-            })}
-          </Pie>
-          <Tooltip
-            content={<CustomTooltip totalCount={sum} />}
-            isAnimationActive={false}
-            allowEscapeViewBox={{ x: true, y: true }}
-          />
-        </PieChart>
-      </div>
-    </>
+    <div style={CHART_WRAPPER_STYLE}>
+      <PieChart height={height} width={height * CHART_ASPECT_RATIO}>
+        <Pie
+          data={data}
+          dataKey="value"
+          cx="50%"
+          cy="50%"
+          innerRadius={height / INNER_RADIUS_REDUCTION_FACTOR}
+          outerRadius={height / OUTER_RADIUS_REDUCTION_FACTOR}
+          label={renderLabel(maxLabelChars)}
+          labelLine={false}
+          isAnimationActive={false}
+          onMouseEnter={onEnter}
+          onMouseLeave={onLeave}
+          onMouseOver={onHover}
+          activeIndex={activeIndex}
+          activeShape={RenderActiveLabel}
+          onClick={onClick}
+        >
+          {data.map((entry, index) => {
+            const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
+            return <Cell key={index} fill={fill} />;
+          })}
+        </Pie>
+        <Tooltip
+          content={<CustomTooltip totalCount={sum} />}
+          isAnimationActive={false}
+          allowEscapeViewBox={{ x: true, y: true }}
+        />
+      </PieChart>
+    </div>
   );
 };
 
@@ -144,9 +140,8 @@ const toNumber = (val: number | string | undefined, defaultValue?: number): numb
   return defaultValue || 0;
 };
 
-const RenderLabel =
-  (maxLabelChars: number): PieProps['label'] =>
-  (params: PieLabelRenderProps) => {  // eslint-disable-line
+const renderLabel = (maxLabelChars: number): PieProps['label'] => {
+  const BentoPieLabel = (params: PieLabelRenderProps) => {
     const { fill, payload, index, activeIndex } = params;
     const percent = params.percent || 0;
     const midAngle = params.midAngle || 0;
@@ -204,6 +199,9 @@ const RenderLabel =
       </g>
     );
   };
+  BentoPieLabel.displayName = BentoPieLabel;
+  return BentoPieLabel;
+};
 
 const RenderActiveLabel: PieProps['activeShape'] = (params) => {
   const { cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill } = params;
