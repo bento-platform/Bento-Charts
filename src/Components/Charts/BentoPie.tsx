@@ -51,11 +51,9 @@ const BentoPie = ({
 
   // ##################### Data processing #####################
 
-  const transformedData = useTransformedChartData(params, true);
+  const transformedData = useTransformedChartData(params, true, sort);
   const { data, sum } = useMemo(() => {
     let data = [...transformedData];
-
-    if (sort) data.sort((a, b) => a.y - b.y);
 
     // combining sections with less than chartThreshold
     const sum = data.reduce((acc, e) => acc + e.y, 0);
