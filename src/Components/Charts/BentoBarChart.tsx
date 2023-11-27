@@ -44,16 +44,6 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
     [onClick]
   );
 
-  // const wrapperRef = useRef<HTMLDivElement | null>(null);
-  // const [chartWidth, setChartWidth] = useState(width ?? height * BAR_DEFAULT_ASPECT_RATIO);
-
-  // useEffect(() => {
-  //   const c = wrapperRef.current;
-  //   if (c) {
-  //     setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * BAR_DEFAULT_ASPECT_RATIO)));
-  //   }
-  // }, [wrapperRef, width]);
-
   if (data.length === 0) {
     return <NoData height={height} />;
   }
