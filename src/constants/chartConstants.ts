@@ -83,6 +83,8 @@ export const CHART_WRAPPER_STYLE: CSS.Properties = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  overflowX: 'auto',
+  overflowY: 'hidden',
 };
 
 // bar chart
