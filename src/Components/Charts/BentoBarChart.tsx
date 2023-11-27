@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label, BarProps } from 'recharts';
+import React, { useCallback } from 'react';
+import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, Label, BarProps, ResponsiveContainer } from 'recharts';
 import {
   TOOL_TIP_STYLE,
   COUNT_STYLE,
   LABEL_STYLE,
   MAX_TICK_LABEL_CHARS,
   TITLE_STYLE,
-  BAR_DEFAULT_ASPECT_RATIO,
   TICKS_SHOW_ALL_LABELS_BELOW,
   UNITS_LABEL_OFFSET,
   TICK_MARGIN,
@@ -45,15 +44,15 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
     [onClick]
   );
 
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [chartWidth, setChartWidth] = useState(width ?? height * BAR_DEFAULT_ASPECT_RATIO);
+  // const wrapperRef = useRef<HTMLDivElement | null>(null);
+  // const [chartWidth, setChartWidth] = useState(width ?? height * BAR_DEFAULT_ASPECT_RATIO);
 
-  useEffect(() => {
-    const c = wrapperRef.current;
-    if (c) {
-      setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * BAR_DEFAULT_ASPECT_RATIO)));
-    }
-  }, [wrapperRef, width]);
+  // useEffect(() => {
+  //   const c = wrapperRef.current;
+  //   if (c) {
+  //     setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * BAR_DEFAULT_ASPECT_RATIO)));
+  //   }
+  // }, [wrapperRef, width]);
 
   if (data.length === 0) {
     return <NoData height={height} />;
@@ -65,31 +64,33 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
   //  on formatting a non-string. This hack manually overrides the ticks for the axis and blanks it out.
   //    - David L, 2023-01-03
   return (
-    <ChartWrapper ref={wrapperRef}>
+    <ChartWrapper>
       <div style={TITLE_STYLE}>{title}</div>
-      <BarChart width={chartWidth} height={height} data={data} margin={BAR_CHART_MARGINS}>
-        <XAxis
-          dataKey="x"
-          height={20}
-          angle={-45}
-          ticks={data.length ? undefined : ['']}
-          tickFormatter={tickFormatter}
-          tickMargin={TICK_MARGIN}
-          textAnchor="end"
-          interval={data.length < TICKS_SHOW_ALL_LABELS_BELOW ? 0 : 'preserveStartEnd'}
-        >
-          <Label value={units} offset={UNITS_LABEL_OFFSET} position="insideBottom" />
-        </XAxis>
-        <YAxis>
-          <Label value={t['Count']} offset={-10} position="left" angle={270} />
-        </YAxis>
-        <Tooltip content={<BarTooltip totalCount={totalCount} />} />
-        <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover}>
-          {data.map((entry) => (
-            <Cell key={entry.x} fill={fill(entry)} />
-          ))}
-        </Bar>
-      </BarChart>
+      <ResponsiveContainer width={width ?? "100%"} height={height}>
+        <BarChart data={data} margin={BAR_CHART_MARGINS}>
+          <XAxis
+            dataKey="x"
+            height={20}
+            angle={-45}
+            ticks={data.length ? undefined : ['']}
+            tickFormatter={tickFormatter}
+            tickMargin={TICK_MARGIN}
+            textAnchor="end"
+            interval={data.length < TICKS_SHOW_ALL_LABELS_BELOW ? 0 : 'preserveStartEnd'}
+          >
+            <Label value={units} offset={UNITS_LABEL_OFFSET} position="insideBottom" />
+          </XAxis>
+          <YAxis>
+            <Label value={t['Count']} offset={-10} position="left" angle={270} />
+          </YAxis>
+          <Tooltip content={<BarTooltip totalCount={totalCount} />} />
+          <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover}>
+            {data.map((entry) => (
+              <Cell key={entry.x} fill={fill(entry)} />
+            ))}
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
     </ChartWrapper>
   );
 };

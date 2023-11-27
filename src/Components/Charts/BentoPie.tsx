@@ -1,5 +1,15 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { PieChart, Pie, Cell, Curve, Tooltip, Sector, PieProps, PieLabelRenderProps } from 'recharts';
+import React, { useCallback, useMemo, useState } from 'react';
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Curve,
+  Tooltip,
+  Sector,
+  PieProps,
+  PieLabelRenderProps,
+  ResponsiveContainer,
+} from 'recharts';
 import type CSS from 'csstype';
 
 import {
@@ -8,10 +18,9 @@ import {
   COUNT_STYLE,
   CHART_MISSING_FILL,
   RADIAN,
-  PIE_DEFAULT_ASPECT_RATIO,
   LABEL_THRESHOLD,
   COUNT_TEXT_STYLE,
-  TEXT_STYLE, BAR_DEFAULT_ASPECT_RATIO,
+  TEXT_STYLE,
 } from '../../constants/chartConstants';
 import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
 import {
@@ -31,9 +40,6 @@ const labelShortName = (name: string, maxChars: number) => {
   // removing 3 character cause ... s add three characters
   return `${name.substring(0, maxChars - 3)}\u2026`;
 };
-
-const OUTER_RADIUS_REDUCTION_FACTOR = 3.75; // originally from 300 / 80
-const INNER_RADIUS_REDUCTION_FACTOR = 8.5; // roughly originally from 300 / 35
 
 const BentoPie = ({
   height,
@@ -97,49 +103,39 @@ const BentoPie = ({
     setActiveIndex(undefined);
   }, []);
 
-  const wrapperRef = useRef<HTMLDivElement | null>(null);
-  const [chartWidth, setChartWidth] = useState(width ?? height * PIE_DEFAULT_ASPECT_RATIO);
-
-  const minDim = useMemo(() => Math.min(height, chartWidth), [height, chartWidth]);
-
-  useEffect(() => {
-    const c = wrapperRef.current;
-    if (c) {
-      setChartWidth(Math.min(c.getBoundingClientRect().width, (width ?? height * PIE_DEFAULT_ASPECT_RATIO)));
-    }
-  }, [wrapperRef, width]);
-
   return (
-    <ChartWrapper ref={wrapperRef}>
-      <PieChart height={height} width={chartWidth}>
-        <Pie
-          data={data}
-          dataKey="value"
-          cx="50%"
-          cy="50%"
-          innerRadius={minDim / INNER_RADIUS_REDUCTION_FACTOR}
-          outerRadius={minDim / OUTER_RADIUS_REDUCTION_FACTOR}
-          label={renderLabel(maxLabelChars)}
-          labelLine={false}
-          isAnimationActive={false}
-          onMouseEnter={onEnter}
-          onMouseLeave={onLeave}
-          onMouseOver={onHover}
-          activeIndex={activeIndex}
-          activeShape={RenderActiveLabel}
-          onClick={onClick}
-        >
-          {data.map((entry, index) => {
-            const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
-            return <Cell key={index} fill={fill} />;
-          })}
-        </Pie>
-        <Tooltip
-          content={<CustomTooltip totalCount={sum} />}
-          isAnimationActive={false}
-          allowEscapeViewBox={{ x: true, y: true }}
-        />
-      </PieChart>
+    <ChartWrapper>
+      <ResponsiveContainer width={width ?? "100%"} height={height}>
+        <PieChart>
+          <Pie
+            data={data}
+            dataKey="value"
+            cx="50%"
+            cy="50%"
+            innerRadius="25%"
+            outerRadius="55%"
+            label={renderLabel(maxLabelChars)}
+            labelLine={false}
+            isAnimationActive={false}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+            onMouseOver={onHover}
+            activeIndex={activeIndex}
+            activeShape={RenderActiveLabel}
+            onClick={onClick}
+          >
+            {data.map((entry, index) => {
+              const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
+              return <Cell key={index} fill={fill} />;
+            })}
+          </Pie>
+          <Tooltip
+            content={<CustomTooltip totalCount={sum} />}
+            isAnimationActive={false}
+            allowEscapeViewBox={{ x: true, y: true }}
+          />
+        </PieChart>
+      </ResponsiveContainer>
     </ChartWrapper>
   );
 };
