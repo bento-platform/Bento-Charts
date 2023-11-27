@@ -83,6 +83,8 @@ export const CHART_WRAPPER_STYLE: CSS.Properties = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  overflowX: 'auto',
+  overflowY: 'hidden',
 };
 
 // bar chart
@@ -104,14 +106,12 @@ export const COUNT_TEXT_STYLE: CSS.Properties = {
 
 // ################### CHART CONSTANTS ###################
 // bar chart
-export const ASPECT_RATIO = 1.2;
 export const MAX_TICK_LABEL_CHARS = 15;
 export const UNITS_LABEL_OFFSET = -75;
 export const TICKS_SHOW_ALL_LABELS_BELOW = 11; // Below this # of X-axis ticks, force-show all labels
 export const TICK_MARGIN = 5; // vertical spacing between tick line and tick label
 
 // pie chart
-export const CHART_ASPECT_RATIO = 1.4;
 export const LABEL_THRESHOLD = 0.05;
 
 // ################### UTIL CONSTANTS ###################
