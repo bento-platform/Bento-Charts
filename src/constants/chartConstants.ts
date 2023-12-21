@@ -63,6 +63,7 @@ export const TOOL_TIP_STYLE: CSS.Properties = {
   boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.9)',
   borderRadius: '2px',
   textAlign: 'left',
+  zIndex: 1,
 };
 
 export const LABEL_STYLE: CSS.Properties = {
