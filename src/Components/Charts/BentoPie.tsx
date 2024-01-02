@@ -52,7 +52,7 @@ const BentoPie = ({
   ...params
 }: PieChartProps) => {
   const t = useChartTranslation();
-  const theme = useChartTheme().pie[colorTheme];
+  const { fill: theme } = useChartTheme().pie[colorTheme];
 
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
 

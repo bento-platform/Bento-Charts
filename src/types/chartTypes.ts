@@ -19,17 +19,15 @@ interface TooltipPayloadItem {
 
 export type HexColor = `#${string}`;
 
+export type ChartThemeContext = { fill: HexColor[]; other: HexColor };
+export type ChartTypeContext = {
+    [key in string]: ChartThemeContext;
+  } & {
+    default: ChartThemeContext;
+  };
 export type ChartTheme = {
-  pie: {
-    [key in string]: HexColor[];
-  } & {
-    default: HexColor[];
-  };
-  bar: {
-    [key in string]: { fill: HexColor; missing: HexColor };
-  } & {
-    default: { fill: HexColor; missing: HexColor };
-  };
+  pie: ChartTypeContext,
+  bar: ChartTypeContext
 };
 
 export type FilterCallback<T> = (value: T, index: number, array: T[]) => boolean;
