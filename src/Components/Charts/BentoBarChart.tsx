@@ -28,9 +28,9 @@ const BAR_CHART_MARGINS = { top: 10, bottom: 100, right: 20 };
 
 const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'default', ...params }: BarChartProps) => {
   const t = useChartTranslation();
-  const { fill: chartFill, missing } = useChartTheme().bar[colorTheme];
+  const { fill: chartFill, other } = useChartTheme().bar[colorTheme];
 
-  const fill = (entry: CategoricalChartDataItem) => (entry.x === 'missing' ? missing : chartFill);
+  const fill = (entry: CategoricalChartDataItem, index: number) => (entry.x === 'missing' ? other : chartFill[index % chartFill.length]);
 
   const data = useTransformedChartData(params, true);
 
@@ -75,8 +75,8 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
           </YAxis>
           <Tooltip content={<BarTooltip totalCount={totalCount} />} />
           <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover}>
-            {data.map((entry) => (
-              <Cell key={entry.x} fill={fill(entry)} />
+            {data.map((entry, index) => (
+              <Cell key={entry.x} fill={fill(entry, index)} />
             ))}
           </Bar>
         </BarChart>

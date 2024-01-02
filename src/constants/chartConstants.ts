@@ -43,12 +43,15 @@ export const CHART_MISSING_FILL = '#bbbbbb';
 
 export const DEFAULT_CHART_THEME: ChartTheme = {
   pie: {
-    default: COLORS,
+    default: {
+      fill: COLORS,
+      other: CHART_MISSING_FILL,
+  }
   },
   bar: {
     default: {
-      fill: BAR_CHART_FILL,
-      missing: CHART_MISSING_FILL,
+      fill: [BAR_CHART_FILL],
+      other: CHART_MISSING_FILL,
     },
   },
 };
