@@ -1,4 +1,5 @@
 import type { PieProps, BarProps } from 'recharts';
+import { COUNT_KEY, OTHER_KEY } from '../constants/chartConstants';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
 
@@ -39,7 +40,7 @@ export type ChartDataMapCallback = UnitaryMapCallback<CategoricalChartDataItem>;
 
 export type SupportedLng = 'en' | 'fr';
 
-type TranslationWords = 'Count' | 'Other';
+type TranslationWords = typeof COUNT_KEY | typeof OTHER_KEY;
 
 export type LngDictionary = {
   [key in TranslationWords]: string;

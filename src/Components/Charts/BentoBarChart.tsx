@@ -21,6 +21,7 @@ import {
   TICKS_SHOW_ALL_LABELS_BELOW,
   UNITS_LABEL_OFFSET,
   TICK_MARGIN,
+  KEY_COUNT,
 } from '../../constants/chartConstants';
 
 import type { BarChartProps, CategoricalChartDataItem, TooltipPayload } from '../../types/chartTypes';
@@ -92,7 +93,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
             <Label value={units} offset={UNITS_LABEL_OFFSET} position="insideBottom" />
           </XAxis>
           <YAxis>
-            <Label value={t['Count']} offset={-10} position="left" angle={270} />
+            <Label value={t[KEY_COUNT]} offset={-10} position="left" angle={270} />
           </YAxis>
           <CartesianGrid
             strokeDasharray="3 3"

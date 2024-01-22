@@ -2,14 +2,18 @@ import type CSS from 'csstype';
 import { ChartTheme, HexColor, TranslationObject } from '../types/chartTypes';
 
 // ################### PACKAGE CONSTANTS ###################
+
+export const COUNT_KEY = 'Count';
+export const OTHER_KEY = 'Other';
+
 export const defaultTranslationObject: TranslationObject = {
   en: {
-    Count: 'Count',
-    Other: 'Other',
+    [COUNT_KEY]: 'Count',
+    [OTHER_KEY]: 'Other',
   },
   fr: {
-    Count: 'Comptage',
-    Other: 'Autre',
+    [COUNT_KEY]: 'Comptage',
+    [OTHER_KEY]: 'Autre',
   },
 };
 
