@@ -21,6 +21,7 @@ import {
   LABEL_THRESHOLD,
   COUNT_TEXT_STYLE,
   TEXT_STYLE,
+  OTHER_KEY,
 } from '../../constants/chartConstants';
 import type { PieChartProps, TooltipPayload } from '../../types/chartTypes';
 import {
@@ -71,7 +72,7 @@ const BentoPie = ({
     data = dataAboveThreshold.length === length - 1 ? data : dataAboveThreshold;
     if (data.length !== length) {
       data.push({
-        x: t['Other'],
+        x: t[OTHER_KEY],
         y: sum - data.reduce((acc, e) => acc + e.y, 0),
       });
     }
@@ -94,7 +95,7 @@ const BentoPie = ({
   const onHover: PieProps['onMouseOver'] = useCallback(
     (data, _index, e) => {
       const { target } = e;
-      if (onClick && target && data.name !== t['Other']) (target as SVGElement).style.cursor = 'pointer';
+      if (onClick && target && data.name !== t[OTHER_KEY]) (target as SVGElement).style.cursor = 'pointer';
     },
     [onClick]
   );
