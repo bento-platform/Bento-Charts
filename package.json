@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bento-platform/Bento-Charts.git"
+    "url": "git+https://github.com/bento-platform/bento_charts.git"
   },
   "keywords": [
     "Bento",
@@ -35,9 +35,9 @@
   "author": "Sanjeev Lakhwani",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bento-platform/Bento-Charts/issues"
+    "url": "https://github.com/bento-platform/bento_charts/issues"
   },
-  "homepage": "https://github.com/bento-platform/Bento-Charts#readme",
+  "homepage": "https://github.com/bento-platform/bento_charts#readme",
   "peerDependencies": {
     "leaflet": "^1.9.4",
     "react": ">=16.0.0",
