@@ -16,6 +16,11 @@ const TestBarChart: React.FC = () => {
             { x: 'SB', y: 60 },
             { x: 'AU', y: 30 },
             { x: 'XA', y: 80 },
+            { x: 'BB', y: 50 },
+            { x: 'BC', y: 75 },
+            { x: 'BD', y: 60 },
+            { x: 'BE', y: 30 },
+            { x: 'BF', y: 80 },
           ]}
           units="management units"
           height={sizeStateFixed.height}

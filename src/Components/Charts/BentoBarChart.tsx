@@ -64,7 +64,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
 
   const cartesianGridVerticalCoordinatesGenerator: CartesianGridProps['verticalCoordinatesGenerator'] = ({ xAxis }) => {
     const points = [xAxis?.x ?? 0];
-    for (let i = 0; i <= xAxis?.tickCount; i++) {
+    for (let i = 0; i <= data.length; i++) {
       points.push(points[i] + xAxis.bandSize);
     }
     return points;
