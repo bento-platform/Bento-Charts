@@ -1,6 +1,6 @@
 {
   "name": "bento-charts",
-  "version": "2.6.3",
+  "version": "2.6.4",
   "description": "Charts library for Bento-platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,9 +22,18 @@
         {
           "preset": "angular",
           "releaseRules": [
-            { "type": "chore", "release": "patch" },
-            { "type": "refact", "release": "minor" },
-            { "type": "refactor", "release": "minor" }
+            {
+              "type": "chore",
+              "release": "patch"
+            },
+            {
+              "type": "refact",
+              "release": "minor"
+            },
+            {
+              "type": "refactor",
+              "release": "minor"
+            }
           ]
         }
       ],
