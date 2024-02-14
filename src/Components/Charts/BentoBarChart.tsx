@@ -4,7 +4,6 @@ import {
   BarChart,
   BarProps,
   CartesianGrid,
-  CartesianGridProps,
   Cell,
   Label,
   ResponsiveContainer,
@@ -62,14 +61,6 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
     return <NoData height={height} />;
   }
 
-  const cartesianGridVerticalCoordinatesGenerator: CartesianGridProps['verticalCoordinatesGenerator'] = ({ xAxis }) => {
-    const points = [xAxis?.x ?? 0];
-    for (let i = 0; i <= data.length; i++) {
-      points.push(points[i] + xAxis.bandSize);
-    }
-    return points;
-  };
-
   // Regarding XAxis.ticks below:
   //  The weird conditional is added from https://github.com/recharts/recharts/issues/2593#issuecomment-1311678397
   //  Basically, if data is empty, Recharts will default to a domain of [0, "auto"] and our tickFormatter trips up
@@ -95,12 +86,9 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
           <YAxis>
             <Label value={t[COUNT_KEY]} offset={-10} position="left" angle={270} />
           </YAxis>
-          <CartesianGrid
-            strokeDasharray="3 3"
-            verticalCoordinatesGenerator={cartesianGridVerticalCoordinatesGenerator}
-          />
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <Tooltip content={<BarTooltip totalCount={totalCount} />} />
-          <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover} maxBarSize={20}>
+          <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover} maxBarSize={70}>
             {data.map((entry, index) => (
               <Cell key={entry.x} fill={fill(entry, index)} />
             ))}
