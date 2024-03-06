@@ -58,6 +58,12 @@ export const DEFAULT_CHART_THEME: ChartTheme = {
       other: CHART_MISSING_FILL,
     },
   },
+  histogram: {
+    default: {
+      fill: [BAR_CHART_FILL],
+      other: CHART_MISSING_FILL,
+    },
+  },
 };
 
 // ################### CHART STYLES ###################
