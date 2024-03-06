@@ -38,11 +38,20 @@ const tickFormatter = (tickLabel: string) => {
 
 const BAR_CHART_MARGINS = { top: 10, bottom: 100, right: 20 };
 
-const BaseBarChart: React.FC<BaseBarChartProps> = ({ height, width, units, title, onClick, chartFill, otherFill, ...params }) => {
+const BaseBarChart: React.FC<BaseBarChartProps> = ({
+  height,
+  width,
+  units,
+  title,
+  onClick,
+  chartFill,
+  otherFill,
+  ...params
+}) => {
   const t = useChartTranslation();
 
   const fill = (entry: CategoricalChartDataItem, index: number) =>
-    entry.x === 'missing' ? otherFill: chartFill[index % chartFill.length];
+    entry.x === 'missing' ? otherFill : chartFill[index % chartFill.length];
 
   const data = useTransformedChartData(params, true);
 
