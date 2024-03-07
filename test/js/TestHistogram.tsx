@@ -11,16 +11,16 @@ const TestBarChart: React.FC = () => {
       <ResizableCard title="Fixed Histogram" sizeState={sizeStateFixed} onSizeChange={setSizeStateFixed}>
         <Histogram
           data={[
-            { x: 'AB', y: 50 },
-            { x: 'NB', y: 75 },
-            { x: 'SB', y: 60 },
-            { x: 'AU', y: 30 },
-            { x: 'XA', y: 80 },
-            { x: 'BB', y: 50 },
-            { x: 'BC', y: 75 },
-            { x: 'BD', y: 60 },
-            { x: 'BE', y: 30 },
-            { x: 'BF', y: 80 },
+            { x: '0-9', y: 7 },
+            { x: '10-19', y: 15 },
+            { x: '20-29', y: 22 },
+            { x: '30-39', y: 13 },
+            { x: '40-49', y: 9 },
+            { x: '50-59', y: 5 },
+            { x: '60-69', y: 3 },
+            { x: '70-79', y: 2 },
+            { x: '80-89', y: 1 },
+            { x: '90-99', y: 1 },
           ]}
           units="management units"
           height={sizeStateFixed.height}
@@ -30,11 +30,16 @@ const TestBarChart: React.FC = () => {
       <ResizableCard title="Responsive Histogram" sizeState={sizeStateResponsive} onSizeChange={setSizeStateResponsive}>
         <Histogram
           data={[
-            { x: 'AB', y: 50 },
-            { x: 'NB', y: 75 },
-            { x: 'SB', y: 60 },
-            { x: 'AU', y: 30 },
-            { x: 'XA', y: 80 },
+            { x: '0-9', y: 7 },
+            { x: '10-19', y: 15 },
+            { x: '20-29', y: 22 },
+            { x: '30-39', y: 13 },
+            { x: '40-49', y: 9 },
+            { x: '50-59', y: 5 },
+            { x: '60-69', y: 3 },
+            { x: '70-79', y: 2 },
+            { x: '80-89', y: 1 },
+            { x: '90-99', y: 1 },
           ]}
           units="management units"
           height={sizeStateResponsive.height}
