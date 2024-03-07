@@ -9,6 +9,7 @@ const TestPieChart = () => (
       alert(JSON.stringify(f, null, 2));
     }}
     height={600}
+    colorTheme="new"
   />
 );
 
