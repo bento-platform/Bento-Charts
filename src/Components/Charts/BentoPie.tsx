@@ -83,10 +83,6 @@ const BentoPie = ({
     };
   }, [transformedData, sort, chartThreshold]);
 
-  if (data.length === 0) {
-    return <NoData height={height} />;
-  }
-
   // ##################### Rendering #####################
   const onEnter: PieProps['onMouseEnter'] = useCallback((_data, index) => {
     setActiveIndex(index);
@@ -103,6 +99,10 @@ const BentoPie = ({
   const onLeave: PieProps['onMouseLeave'] = useCallback(() => {
     setActiveIndex(undefined);
   }, []);
+
+  if (data.length === 0) {
+    return <NoData height={height} />;
+  }
 
   return (
     <ChartWrapper>
