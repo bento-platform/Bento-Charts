@@ -50,7 +50,7 @@ export const DEFAULT_CHART_THEME: ChartTheme = {
     default: {
       fill: COLORS,
       other: CHART_MISSING_FILL,
-  }
+    },
   },
   bar: {
     default: {
@@ -63,13 +63,14 @@ export const DEFAULT_CHART_THEME: ChartTheme = {
 // ################### CHART STYLES ###################
 
 // common
-export const TOOL_TIP_STYLE: CSS.Properties = {
+export const TOOLTIP_STYLE: CSS.Properties = {
   backgroundColor: 'rgba(255, 255, 255, 0.9)',
   padding: '5px',
   border: '1px solid grey',
   boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.9)',
   borderRadius: '2px',
   textAlign: 'left',
+  position: 'relative',
   zIndex: 1,
 };
 
@@ -91,8 +92,6 @@ export const CHART_WRAPPER_STYLE: CSS.Properties = {
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  overflowX: 'auto',
-  overflowY: 'hidden',
 };
 
 // bar chart
