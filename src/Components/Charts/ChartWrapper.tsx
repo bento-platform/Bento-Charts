@@ -7,7 +7,7 @@ interface ChartWrapperProps {
 }
 
 const ChartWrapper = forwardRef(({ responsive, children }: ChartWrapperProps, ref: ForwardedRef<HTMLDivElement>) => (
-  <div style={{ ...CHART_WRAPPER_STYLE, ...(responsive ? { overflowX: 'auto', overflowY: 'hidden' } : {}) }} ref={ref}>
+  <div style={{ ...CHART_WRAPPER_STYLE, ...(responsive ? {} : { overflowX: 'auto', overflowY: 'hidden' }) }} ref={ref}>
     {children}
   </div>
 ));

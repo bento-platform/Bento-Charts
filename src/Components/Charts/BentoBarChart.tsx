@@ -69,7 +69,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
   //  on formatting a non-string. This hack manually overrides the ticks for the axis and blanks it out.
   //    - David L, 2023-01-03
   return (
-    <ChartWrapper responsive={typeof width === 'number'}>
+    <ChartWrapper responsive={typeof width !== 'number'}>
       <div style={TITLE_STYLE}>{title}</div>
       <ResponsiveContainer width={width ?? '100%'} height={height}>
         <BarChart data={data} margin={BAR_CHART_MARGINS}>

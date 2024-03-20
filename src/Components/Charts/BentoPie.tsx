@@ -105,7 +105,7 @@ const BentoPie = ({
   }
 
   return (
-    <ChartWrapper responsive={typeof width === 'number'}>
+    <ChartWrapper responsive={typeof width !== 'number'}>
       <ResponsiveContainer width={width ?? '100%'} height={height}>
         <PieChart>
           <Pie
