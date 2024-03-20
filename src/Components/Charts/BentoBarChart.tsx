@@ -11,8 +11,10 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import type { TooltipProps } from 'recharts';
+
 import {
-  TOOL_TIP_STYLE,
+  TOOLTIP_STYLE,
   COUNT_STYLE,
   LABEL_STYLE,
   MAX_TICK_LABEL_CHARS,
@@ -67,7 +69,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
   //  on formatting a non-string. This hack manually overrides the ticks for the axis and blanks it out.
   //    - David L, 2023-01-03
   return (
-    <ChartWrapper>
+    <ChartWrapper responsive={typeof width === 'number'}>
       <div style={TITLE_STYLE}>{title}</div>
       <ResponsiveContainer width={width ?? '100%'} height={height}>
         <BarChart data={data} margin={BAR_CHART_MARGINS}>
@@ -99,15 +101,12 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
   );
 };
 
-const BarTooltip = ({
-  active,
-  payload,
-  totalCount,
-}: {
-  active?: boolean;
+interface BarTooltipProps extends TooltipProps<number, string> {
   payload?: TooltipPayload;
   totalCount: number;
-}) => {
+}
+
+const BarTooltip = ({ active, payload, totalCount }: BarTooltipProps) => {
   if (!active) {
     return null;
   }
@@ -117,7 +116,7 @@ const BarTooltip = ({
   const percentage = totalCount ? Math.round((value / totalCount) * 100) : 0;
 
   return (
-    <div style={TOOL_TIP_STYLE}>
+    <div style={TOOLTIP_STYLE}>
       <p style={LABEL_STYLE}>{name}</p>
       <p style={COUNT_STYLE}>
         {value} ({percentage}%)

@@ -13,7 +13,7 @@ import {
 import type CSS from 'csstype';
 
 import {
-  TOOL_TIP_STYLE,
+  TOOLTIP_STYLE,
   LABEL_STYLE,
   COUNT_STYLE,
   CHART_MISSING_FILL,
@@ -105,8 +105,8 @@ const BentoPie = ({
   }
 
   return (
-    <ChartWrapper>
-      <ResponsiveContainer width={width ?? "100%"} height={height}>
+    <ChartWrapper responsive={typeof width === 'number'}>
+      <ResponsiveContainer width={width ?? '100%'} height={height}>
         <PieChart>
           <Pie
             data={data}
@@ -259,7 +259,7 @@ const CustomTooltip = ({
   const percentage = totalCount ? Math.round((value / totalCount) * 100) : 0;
 
   return name !== 'other' ? (
-    <div style={TOOL_TIP_STYLE}>
+    <div style={TOOLTIP_STYLE}>
       <p style={LABEL_STYLE}>{name}</p>
       <p style={COUNT_STYLE}>
         {' '}
