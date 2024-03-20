@@ -63,6 +63,16 @@ export const DEFAULT_CHART_THEME: ChartTheme = {
 // ################### CHART STYLES ###################
 
 // common
+export const TOOLTIP_OTHER_PROPS: {
+  wrapperStyle: CSS.Properties;
+  allowEscapeViewBox: { x: boolean; y: boolean };
+} = {
+  wrapperStyle: {
+    zIndex: 10,
+  },
+  allowEscapeViewBox: { x: true, y: true },
+};
+
 export const TOOLTIP_STYLE: CSS.Properties = {
   backgroundColor: 'rgba(255, 255, 255, 0.9)',
   padding: '5px',
@@ -70,8 +80,6 @@ export const TOOLTIP_STYLE: CSS.Properties = {
   boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.9)',
   borderRadius: '2px',
   textAlign: 'left',
-  position: 'relative',
-  zIndex: 1,
 };
 
 export const LABEL_STYLE: CSS.Properties = {

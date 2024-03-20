@@ -15,6 +15,7 @@ import type { TooltipProps } from 'recharts';
 
 import {
   TOOLTIP_STYLE,
+  TOOLTIP_OTHER_PROPS,
   COUNT_STYLE,
   LABEL_STYLE,
   MAX_TICK_LABEL_CHARS,
@@ -69,7 +70,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
   //  on formatting a non-string. This hack manually overrides the ticks for the axis and blanks it out.
   //    - David L, 2023-01-03
   return (
-    <ChartWrapper responsive={typeof width === 'number'}>
+    <ChartWrapper responsive={typeof width !== 'number'}>
       <div style={TITLE_STYLE}>{title}</div>
       <ResponsiveContainer width={width ?? '100%'} height={height}>
         <BarChart data={data} margin={BAR_CHART_MARGINS}>
@@ -89,7 +90,7 @@ const BentoBarChart = ({ height, width, units, title, onClick, colorTheme = 'def
             <Label value={t[COUNT_KEY]} offset={-10} position="left" angle={270} />
           </YAxis>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
-          <Tooltip content={<BarTooltip totalCount={totalCount} />} />
+          <Tooltip {...TOOLTIP_OTHER_PROPS} content={<BarTooltip totalCount={totalCount} />} />
           <Bar dataKey="y" isAnimationActive={false} onClick={onClick} onMouseEnter={onHover} maxBarSize={70}>
             {data.map((entry, index) => (
               <Cell key={entry.x} fill={fill(entry, index)} />
