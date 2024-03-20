@@ -14,6 +14,7 @@ import type CSS from 'csstype';
 
 import {
   TOOLTIP_STYLE,
+  TOOLTIP_OTHER_PROPS,
   LABEL_STYLE,
   COUNT_STYLE,
   CHART_MISSING_FILL,
@@ -130,11 +131,7 @@ const BentoPie = ({
               return <Cell key={index} fill={fill} />;
             })}
           </Pie>
-          <Tooltip
-            content={<CustomTooltip totalCount={sum} />}
-            isAnimationActive={false}
-            allowEscapeViewBox={{ x: true, y: true }}
-          />
+          <Tooltip {...TOOLTIP_OTHER_PROPS} content={<CustomTooltip totalCount={sum} />} isAnimationActive={false} />
         </PieChart>
       </ResponsiveContainer>
     </ChartWrapper>
