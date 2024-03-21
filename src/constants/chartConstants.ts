@@ -69,16 +69,18 @@ export const TOOLTIP_OTHER_PROPS: {
 } = {
   wrapperStyle: {
     zIndex: 10,
+    maxWidth: '240px',
   },
   allowEscapeViewBox: { x: true, y: true },
 };
 
 export const TOOLTIP_STYLE: CSS.Properties = {
   backgroundColor: 'rgba(255, 255, 255, 0.9)',
+  backdropFilter: 'blur(4px)',
   padding: '5px',
-  border: '1px solid grey',
-  boxShadow: '0px 0px 2px rgba(0, 0, 0, 0.9)',
-  borderRadius: '2px',
+  border: '1px solid #DDD',
+  boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.1)',
+  borderRadius: '4px',
   textAlign: 'left',
 };
 
@@ -91,7 +93,7 @@ export const LABEL_STYLE: CSS.Properties = {
 
 export const COUNT_STYLE: CSS.Properties = {
   fontWeight: 'normal',
-  fontSize: '11px',
+  fontSize: '12px',
   padding: '0',
   margin: '0',
 };
