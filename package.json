@@ -1,6 +1,6 @@
 {
   "name": "bento-charts",
-  "version": "2.6.4",
+  "version": "2.6.8",
   "description": "Charts library for Bento-platform",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -33,6 +33,10 @@
             {
               "type": "refactor",
               "release": "minor"
+            },
+            {
+              "type": "style",
+              "release": "patch"
             }
           ]
         }

@@ -13,7 +13,8 @@ import {
 import type CSS from 'csstype';
 
 import {
-  TOOL_TIP_STYLE,
+  TOOLTIP_STYLE,
+  TOOLTIP_OTHER_PROPS,
   LABEL_STYLE,
   COUNT_STYLE,
   CHART_MISSING_FILL,
@@ -83,10 +84,6 @@ const BentoPie = ({
     };
   }, [transformedData, sort, chartThreshold]);
 
-  if (data.length === 0) {
-    return <NoData height={height} />;
-  }
-
   // ##################### Rendering #####################
   const onEnter: PieProps['onMouseEnter'] = useCallback((_data, index) => {
     setActiveIndex(index);
@@ -104,9 +101,13 @@ const BentoPie = ({
     setActiveIndex(undefined);
   }, []);
 
+  if (data.length === 0) {
+    return <NoData height={height} />;
+  }
+
   return (
-    <ChartWrapper>
-      <ResponsiveContainer width={width ?? "100%"} height={height}>
+    <ChartWrapper responsive={typeof width !== 'number'}>
+      <ResponsiveContainer width={width ?? '100%'} height={height}>
         <PieChart>
           <Pie
             data={data}
@@ -130,11 +131,7 @@ const BentoPie = ({
               return <Cell key={index} fill={fill} />;
             })}
           </Pie>
-          <Tooltip
-            content={<CustomTooltip totalCount={sum} />}
-            isAnimationActive={false}
-            allowEscapeViewBox={{ x: true, y: true }}
-          />
+          <Tooltip {...TOOLTIP_OTHER_PROPS} content={<CustomTooltip totalCount={sum} />} isAnimationActive={false} />
         </PieChart>
       </ResponsiveContainer>
     </ChartWrapper>
@@ -259,7 +256,7 @@ const CustomTooltip = ({
   const percentage = totalCount ? Math.round((value / totalCount) * 100) : 0;
 
   return name !== 'other' ? (
-    <div style={TOOL_TIP_STYLE}>
+    <div style={TOOLTIP_STYLE}>
       <p style={LABEL_STYLE}>{name}</p>
       <p style={COUNT_STYLE}>
         {' '}

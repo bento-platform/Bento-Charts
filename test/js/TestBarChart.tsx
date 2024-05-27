@@ -35,7 +35,7 @@ const TestBarChart: React.FC = () => {
             { x: 'NB', y: 75 },
             { x: 'SB', y: 60 },
             { x: 'AU', y: 30 },
-            { x: 'XA', y: 80 },
+            { x: 'XA really really really really really really really really really really long label', y: 80 },
           ]}
           units="management units"
           height={sizeStateResponsive.height}
