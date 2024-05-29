@@ -5,26 +5,30 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
         "plugin:react/recommended",
-        "plugin:@typescript-eslint/recommended"
+        "plugin:react-hooks/recommended",
+        "plugin:prettier/recommended"
     ],
-    "overrides": [
+    "plugins": [
+        "@typescript-eslint",
+        "react",
+        "react-hooks",
+        "prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "semi": [2, "always"]
-    },
     "settings": {
         "react": {
-            "version": "^18.2.0"
+            "version": "detect"
         }
+    },
+    "rules": {
+        "prettier/prettier": "error",
+        "react/prop-types": "off",
+        "semi": [2, "always"]
     }
 }
