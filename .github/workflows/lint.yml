@@ -1,15 +1,30 @@
-name: Lint
+name: Lint and Format
+
 on:
   push:
     branches:
       - main
   pull_request:
+    branches:
+      - main
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Install modules
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      - name: Install dependencies
         run: npm install
-      - name: Run linter
+
+      - name: Run EsLint
         run: npm run lint
+
+      - name: Run Prettier
+        run: npm run format -- --check
