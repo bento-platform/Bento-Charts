@@ -23,8 +23,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run EsLint
+      - name: Run Linter (Checks for Eslint and Prettier errors)
         run: npm run lint
-
-      - name: Run Prettier
-        run: npm run format -- --check
