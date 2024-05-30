@@ -18,7 +18,7 @@ export const useTransformedChartData = (
     removeEmpty: origRemoveEmpty,
   }: CategoricalChartDataWithTransforms,
   defaultRemoveEmpty = true,
-  sortY = false,
+  sortY = false
 ) =>
   useMemo(() => {
     const removeEmpty = origRemoveEmpty ?? defaultRemoveEmpty;
@@ -34,4 +34,4 @@ export const useTransformedChartData = (
     if (sortY) data.sort((a, b) => a.y - b.y);
 
     return data;
-  }, [originalData, preFilter, dataMap, postFilter, origRemoveEmpty]);
+  }, [dataMap, defaultRemoveEmpty, originalData, origRemoveEmpty, preFilter, postFilter, sortY]);
