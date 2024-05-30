@@ -35,8 +35,6 @@ import { polarToCartesian, useTransformedChartData } from '../../util/chartUtils
 import NoData from '../NoData';
 import ChartWrapper from './ChartWrapper';
 
-import useResolvedValue from '../../hooks/resolveValueHook';
-
 const labelShortName = (name: string, maxChars: number) => {
   if (name.length <= maxChars) {
     return name;
@@ -58,8 +56,11 @@ const BentoPie = ({
   const t = useChartTranslation();
   const { fill: theme } = useChartTheme().pie[colorTheme];
 
-  const resolvedChartThreshold = useResolvedValue(chartThreshold, useChartThreshold);
-  const resolvedMaxLabelChars = useResolvedValue(maxLabelChars, useChartMaxLabelChars);
+  const defaultChartThreshold = useChartThreshold();
+  const defaultMaxLabelChars = useChartMaxLabelChars();
+
+  const resolvedChartThreshold = chartThreshold ?? defaultChartThreshold;
+  const resolvedMaxLabelChars = maxLabelChars ?? defaultMaxLabelChars;
 
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
 
