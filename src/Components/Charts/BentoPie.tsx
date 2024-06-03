@@ -49,12 +49,18 @@ const BentoPie = ({
   onClick,
   sort = true,
   colorTheme = 'default',
-  chartThreshold = useChartThreshold(),
-  maxLabelChars = useChartMaxLabelChars(),
+  chartThreshold,
+  maxLabelChars,
   ...params
 }: PieChartProps) => {
   const t = useChartTranslation();
   const { fill: theme } = useChartTheme().pie[colorTheme];
+
+  const defaultChartThreshold = useChartThreshold();
+  const defaultMaxLabelChars = useChartMaxLabelChars();
+
+  const resolvedChartThreshold = chartThreshold ?? defaultChartThreshold;
+  const resolvedMaxLabelChars = maxLabelChars ?? defaultMaxLabelChars;
 
   const [activeIndex, setActiveIndex] = useState<number | undefined>(undefined);
 
@@ -67,7 +73,7 @@ const BentoPie = ({
     // combining sections with less than chartThreshold
     const sum = data.reduce((acc, e) => acc + e.y, 0);
     const length = data.length;
-    const threshold = chartThreshold * sum;
+    const threshold = resolvedChartThreshold * sum;
     const dataAboveThreshold = data.filter((e) => e.y > threshold);
     // length - 1 intentional: if there is just one category below threshold, the "Other" category is not necessary.
     data = dataAboveThreshold.length === length - 1 ? data : dataAboveThreshold;
@@ -82,7 +88,7 @@ const BentoPie = ({
       data: data.map((e) => ({ name: e.x, value: e.y })),
       sum,
     };
-  }, [transformedData, sort, chartThreshold]);
+  }, [t, transformedData, resolvedChartThreshold]);
 
   // ##################### Rendering #####################
   const onEnter: PieProps['onMouseEnter'] = useCallback((_data, index) => {
@@ -94,7 +100,7 @@ const BentoPie = ({
       const { target } = e;
       if (onClick && target && data.name !== t[OTHER_KEY]) (target as SVGElement).style.cursor = 'pointer';
     },
-    [onClick]
+    [t, onClick]
   );
 
   const onLeave: PieProps['onMouseLeave'] = useCallback(() => {
@@ -116,7 +122,7 @@ const BentoPie = ({
             cy="50%"
             innerRadius="25%"
             outerRadius="55%"
-            label={renderLabel(maxLabelChars)}
+            label={renderLabel(resolvedMaxLabelChars)}
             labelLine={false}
             isAnimationActive={false}
             onMouseEnter={onEnter}
@@ -147,7 +153,7 @@ const toNumber = (val: number | string | undefined, defaultValue?: number): numb
   return defaultValue || 0;
 };
 
-const renderLabel = (maxLabelChars: number): PieProps['label'] => {
+const renderLabel = (resolvedMaxLabelChars: number): PieProps['label'] => {
   const BentoPieLabel = (params: PieLabelRenderProps) => {
     const { fill, payload, index, activeIndex } = params;
     const percent = params.percent || 0;
@@ -198,7 +204,7 @@ const renderLabel = (maxLabelChars: number): PieProps['label'] => {
         <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
         <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
         <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 3} textAnchor={textAnchor} style={currentTextStyle}>
-          {labelShortName(name, maxLabelChars)}
+          {labelShortName(name, resolvedMaxLabelChars)}
         </text>
         <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={14} textAnchor={textAnchor} style={COUNT_TEXT_STYLE}>
           {`(${payload.value})`}

@@ -61,7 +61,7 @@ const BentoChoroplethMap = ({
         fillOpacity: 1, // actual opacity set by fillColor
       };
     },
-    [data, features]
+    [calculateColor, categoryProp, dataByFeatureCat]
   );
 
   const [popupContents, setPopupContents] = useState<React.ReactNode | null>(null);
@@ -95,7 +95,7 @@ const BentoChoroplethMap = ({
           );
         },
       }) as LeafletEventHandlerFnMap,
-    [onClick, categoryProp, renderPopupBody]
+    [onClick, categoryProp, dataByFeatureCat, renderPopupBody]
   );
 
   const geoJsonLayer: Ref<LeafletGeoJSON> = useRef(null);
