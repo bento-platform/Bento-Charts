@@ -26,6 +26,12 @@ const TestBarChart: React.FC = () => {
           height={sizeStateFixed.height}
           width={sizeStateFixed.width}
           colorTheme="new"
+          onClick={(f) => {
+            console.log('onClick', f);
+          }}
+          onChartClick={(f) => {
+            console.log('onChartClick', f);
+          }}
         />
       </ResizableCard>
       <ResizableCard title="Responsive Bar Chart" sizeState={sizeStateResponsive} onSizeChange={setSizeStateResponsive}>
@@ -40,6 +46,12 @@ const TestBarChart: React.FC = () => {
           units="management units"
           height={sizeStateResponsive.height}
           colorTheme="new"
+          onClick={(f) => {
+            console.log('onClick', f);
+          }}
+          onChartClick={(f) => {
+            console.log('onChartClick', f);
+          }}
         />
       </ResizableCard>
     </Space>

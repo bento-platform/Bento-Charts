@@ -25,6 +25,12 @@ const TestBarChart: React.FC = () => {
           units="management units"
           height={sizeStateFixed.height}
           width={sizeStateFixed.width}
+          onClick={(f) => {
+            console.log('onClick', f);
+          }}
+          onChartClick={(f) => {
+            console.log('onChartClick', f);
+          }}
         />
       </ResizableCard>
       <ResizableCard title="Responsive Histogram" sizeState={sizeStateResponsive} onSizeChange={setSizeStateResponsive}>
@@ -43,6 +49,12 @@ const TestBarChart: React.FC = () => {
           ]}
           units="management units"
           height={sizeStateResponsive.height}
+          onClick={(f) => {
+            console.log('onClick', f);
+          }}
+          onChartClick={(f) => {
+            console.log('onChartClick', f);
+          }}
         />
       </ResizableCard>
     </Space>

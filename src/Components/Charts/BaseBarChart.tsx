@@ -44,6 +44,7 @@ const BaseBarChart: React.FC<BaseBarChartProps> = ({
   units,
   title,
   onClick,
+  onChartClick,
   chartFill,
   otherFill,
   ...params
@@ -78,7 +79,7 @@ const BaseBarChart: React.FC<BaseBarChartProps> = ({
     <ChartWrapper responsive={typeof width !== 'number'}>
       <div style={TITLE_STYLE}>{title}</div>
       <ResponsiveContainer width={width ?? '100%'} height={height}>
-        <BarChart data={data} margin={BAR_CHART_MARGINS}>
+        <BarChart data={data} margin={BAR_CHART_MARGINS} onClick={onChartClick}>
           <XAxis
             dataKey="x"
             height={20}
