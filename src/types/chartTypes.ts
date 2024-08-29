@@ -1,4 +1,5 @@
 import type { PieProps, BarProps } from 'recharts';
+import type { BarChartProps as RechartsBarChartProps } from 'recharts/index.d.ts';
 import { COUNT_KEY, OTHER_KEY } from '../constants/chartConstants';
 
 export type CategoricalChartDataType = CategoricalChartDataItem[];
@@ -83,6 +84,7 @@ export interface BaseBarChartProps extends BaseCategoricalChartProps {
   title?: string;
   units: string;
   onClick?: BarProps['onClick'];
+  onChartClick?: RechartsBarChartProps['onClick'];
 }
 
 export interface BarChartProps extends Omit<BaseBarChartProps, 'chartFill' | 'otherFill'> {
