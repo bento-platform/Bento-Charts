@@ -1,4 +1,5 @@
-import React, { type ReactNode, useContext } from 'react';
+import React, { useContext } from 'react';
+import type { ReactNode } from 'react';
 
 import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
 import type { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
