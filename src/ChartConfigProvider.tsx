@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import type { ReactNode } from 'react';
 
 import { DEFAULT_CHART_THEME, defaultTranslationObject } from './constants/chartConstants';
 import type { ChartTheme, LngDictionary, SupportedLng, TranslationObject } from './types/chartTypes';
@@ -63,7 +64,7 @@ type ChartConfigProviderProps = {
   theme?: ChartTheme;
   Lng: string;
   translationMap?: TranslationObject;
-  children: React.ReactElement;
+  children: ReactNode;
   globalThreshold?: number;
   maxLabelChars?: number;
 };
