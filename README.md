@@ -157,7 +157,7 @@ Run these steps once to setup commitlint + husky.
 # Install dev dependencies (commitlint & husky)
 npm install
 # Install husky git hook
-npx husky init
+npx husky
 # Add commitlint as a hook to husky
 echo 'npx --no -- commitlint --edit ${1}' > .husky/commit-msg
 ```
