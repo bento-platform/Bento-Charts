@@ -1,8 +1,7 @@
 {
   "name": "bento-charts",
-  "version": "2.10.0",
+  "version": "2.9.3",
   "description": "Charts library for Bento-platform",
-  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
