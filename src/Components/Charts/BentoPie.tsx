@@ -81,11 +81,12 @@ const BentoPie = ({
       data.push({
         x: t[OTHER_KEY],
         y: sum - data.reduce((acc, e) => acc + e.y, 0),
+        id: OTHER_KEY,
       });
     }
 
     return {
-      data: data.map((e) => ({ name: e.x, value: e.y })),
+      data: data.map((e) => ({ name: e.x, value: e.y, ...e })),
       sum,
     };
   }, [t, transformedData, resolvedChartThreshold]);
