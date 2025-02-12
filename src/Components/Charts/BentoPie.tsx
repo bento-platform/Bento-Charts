@@ -44,20 +44,11 @@ const labelShortName = (name: string, maxChars: number) => {
 };
 
 // New helper function to extract the fill color logic
-const getPieSegmentFill = (
-  entry: { name: string },
-  index: number,
-  data: Array<{ name: string }>,
-  theme: string[]
-) => {
-  let fill =
-    entry.name.toLowerCase() === 'missing'
-      ? CHART_MISSING_FILL
-      : theme[index % theme.length];
+const getPieSegmentFill = (entry: { name: string }, index: number, data: Array<{ name: string }>, theme: string[]) => {
+  let fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
   if (index === data.length - 1 && entry.name.toLowerCase() !== 'missing') {
     const firstEntry = data[0];
-    const firstFill =
-      firstEntry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[0];
+    const firstFill = firstEntry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[0];
     if (fill === firstFill) {
       fill = theme[(index + 1) % theme.length];
     }
