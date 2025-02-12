@@ -43,6 +43,19 @@ const labelShortName = (name: string, maxChars: number) => {
   return `${name.substring(0, maxChars - 3)}\u2026`;
 };
 
+// New helper function to extract the fill color logic
+const getPieSegmentFill = (entry: { name: string }, index: number, data: Array<{ name: string }>, theme: string[]) => {
+  let fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
+  if (index === data.length - 1 && entry.name.toLowerCase() !== 'missing') {
+    const firstEntry = data[0];
+    const firstFill = firstEntry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[0];
+    if (fill === firstFill) {
+      fill = theme[(index + 1) % theme.length];
+    }
+  }
+  return fill;
+};
+
 const BentoPie = ({
   height,
   width,
@@ -133,10 +146,9 @@ const BentoPie = ({
             activeShape={RenderActiveLabel}
             onClick={onClick}
           >
-            {data.map((entry, index) => {
-              const fill = entry.name.toLowerCase() === 'missing' ? CHART_MISSING_FILL : theme[index % theme.length];
-              return <Cell key={index} fill={fill} />;
-            })}
+            {data.map((entry, index) => (
+              <Cell key={index} fill={getPieSegmentFill(entry, index, data, theme)} />
+            ))}
           </Pie>
           <Tooltip {...TOOLTIP_OTHER_PROPS} content={<CustomTooltip totalCount={sum} />} isAnimationActive={false} />
         </PieChart>
